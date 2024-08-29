@@ -13,13 +13,14 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Component("chatRoomsRepository")
-public class ChatRoomsRepositoryImpl implements ChatRoomsRepository {
+public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -82,12 +83,16 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository {
                 sql,
                 new MapSqlParameterSource(params),
                 keyHolder,
-                new String[]{"id"}
+                new String[]{"id", "created_at"}
         );
 
-        Number genId = keyHolder.getKey();
-        if (genId != null) {
-            entity.setId((Long) genId);
+        Map<String, Object> generatedKeys = keyHolder.getKeys();
+        if (generatedKeys != null) {
+            Long generatedId = (Long) generatedKeys.get("id");
+            Timestamp createdAt = (Timestamp) generatedKeys.get("created_at");
+
+            entity.setId(generatedId);
+            entity.setCreatedAt(createdAt);
         }
     }
 
