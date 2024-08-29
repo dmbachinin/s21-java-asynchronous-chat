@@ -21,7 +21,7 @@ public class Server implements Runnable {
 
     @Autowired
     public Server(
-            @Value("${server.port:8080}") int port,
+            @Value("${server.port:8081}") int port,
             @Value("${server.threadPool:10}") int threadPool,
             UsersService usersService) throws IOException {
         this.usersService = usersService;
@@ -34,6 +34,7 @@ public class Server implements Runnable {
         try {
             while (running) {
                 Socket clientSocket = serverSocket.accept();
+                System.out.println("ECЬ Клиент");
                 executorService.execute(()->{handleClient(clientSocket);});
             }
         } catch (Exception e) {
@@ -81,4 +82,11 @@ public class Server implements Runnable {
         }
     }
 
+     public int getPort() {
+         return serverSocket.getLocalPort();
+     }
+
+    public String getAddress() {
+        return serverSocket.getInetAddress().getHostAddress();
+    }
 }

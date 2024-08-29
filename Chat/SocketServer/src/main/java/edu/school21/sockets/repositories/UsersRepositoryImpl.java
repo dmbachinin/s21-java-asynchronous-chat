@@ -1,6 +1,7 @@
 package edu.school21.sockets.repositories;
 
 import edu.school21.sockets.models.User;
+import edu.school21.sockets.rowMappers.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,16 +31,6 @@ public class UsersRepositoryImpl implements UsersRepository<User>{
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    private static class UserRowMapper implements RowMapper<User> {
-
-        @Override
-        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new User(rs.getLong("id"),
-                    rs.getString("email"),
-                    rs.getString("password_hash")
-            );
-        }
-    }
     @Override
     public Optional<User> findById(Long id) {
         String sql = "SELECT * FROM users WHERE id = :id";
