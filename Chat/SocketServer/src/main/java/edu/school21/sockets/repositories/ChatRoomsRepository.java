@@ -12,5 +12,7 @@ public interface ChatRoomsRepository<T> extends CrudRepository<T> {
 
     boolean addUserToRoom(Long roomId, Long userId);
 
+    boolean updateLastRoom(Long userId, Long roomId);
+
     boolean removeUserFromRoom(Long roomId, Long userId);
 }
