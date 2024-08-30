@@ -96,11 +96,16 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
     }
 
     @Override
-    public List<Message> getMessagesForCurrentRoom(Long roomId, Integer count) {
-        String sql = "SELECT * FROM messages WHERE room_id = :room_id LIMIT :count";
+    public List<Message> getMessagesByRoom(Long roomId, int page, int size) {
+        // SQL-запрос с поддержкой постраничной выборки
+        String sql = "SELECT * FROM messages WHERE room_id = :room_id ORDER BY created_at DESC LIMIT :size OFFSET :offset";
+
+        int offset = (page - 1) * size;
+
         Map<String, Object> params = new HashMap<>();
         params.put("room_id", roomId);
-        params.put("count", count);
+        params.put("size", size);
+        params.put("offset", offset);
 
         return namedParameterJdbcTemplate.query(sql, params, new MessageRowMapper());
     }
