@@ -8,5 +8,9 @@ import java.util.List;
 public interface ChatRoomsRepository<T> extends CrudRepository<T> {
     List<User> getAllConnectedUser(Long roomId);
 
-    void addUserIntoChatRoom(Long roomId, Long userId);
+    List<ChatRoom> findUserChatRooms(Long userId);
+
+    boolean addUserToRoom(Long roomId, Long userId);
+
+    boolean removeUserFromRoom(Long roomId, Long userId);
 }

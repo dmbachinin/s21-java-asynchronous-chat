@@ -33,7 +33,7 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
     @Override
     public List<User> getAllConnectedUser(Long roomId) {
         String sql = "SELECT us.* FROM users us " +
-                "JOIN user_chat_rooms AS ucr ON ucr.user_id = us.id AND ucr.room_id = :roomId ";
+                "JOIN user_chat_rooms ucr ON ucr.user_id = us.id AND ucr.room_id = :roomId ";
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
 
@@ -41,12 +41,33 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
     }
 
     @Override
-    public void addUserIntoChatRoom(Long roomId, Long userId) {
+    public List<ChatRoom> findUserChatRooms(Long userId) {
+        String sql = "SELECT cr.* FROM users us " +
+                "JOIN user_chat_rooms ucr ON ucr.user_id = us.id " +
+                "JOIN  chat_rooms cr ON cr.id = ucr.room_id WHERE us.id = :userId";
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        return  namedParameterJdbcTemplate.query(sql, params, new ChatRoomRowMapper());
+    }
+
+    @Override
+    public boolean addUserToRoom(Long roomId, Long userId) {
         String sql = "INSERT INTO user_chat_rooms(user_id, room_id) VALUES (:roomId, :userId)";
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
         params.put("userId", userId);
-        namedParameterJdbcTemplate.update(sql, params);
+        int modifiedLines = namedParameterJdbcTemplate.update(sql, params);
+        return modifiedLines > 0;
+    }
+
+    @Override
+    public boolean removeUserFromRoom(Long roomId, Long userId) {
+        String sql = "DELETE FROM user_chat_rooms WHERE user_id = :userId AND room_id = :roomId ";
+        Map<String, Object> params = new HashMap<>();
+        params.put("roomId", roomId);
+        params.put("userId", userId);
+        int modifiedLines = namedParameterJdbcTemplate.update(sql, params);
+        return modifiedLines > 0;
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Component("usersRepository")
+@Component("messageRepository")
 public class MessageRepositoryImpl implements MessageRepository<Message>{
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
