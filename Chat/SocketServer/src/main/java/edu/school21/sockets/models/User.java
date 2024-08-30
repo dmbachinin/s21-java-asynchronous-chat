@@ -3,13 +3,15 @@ package edu.school21.sockets.models;
 public class User {
     private Long id;
     private String email;
+    private String name;
     private String passwordHash;
 
     public User() {}
 
 
-    public User(Long id, String email, String passwordHash) {
+    public User(Long id, String name, String email, String passwordHash) {
         this.id = id;
+        this.name = name;
         this.email = email;
         this.passwordHash = passwordHash;
     }
@@ -38,13 +40,21 @@ public class User {
         this.passwordHash = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + passwordHash + '\'' +
+                ", name='" + name + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
                 '}';
     }
 }

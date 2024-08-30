@@ -51,10 +51,11 @@ public class UsersRepositoryImpl implements UsersRepository<User>{
 
     @Override
     public void save(User entity) {
-        String sql = "INSERT INTO users(email, password_hash) VALUES (:email, :password_hash)";
+        String sql = "INSERT INTO users(name, email, password_hash) VALUES (:name, :email, :password_hash)";
         Map<String, Object> params = new HashMap<>();
         params.put("email", entity.getEmail());
         params.put("password_hash", entity.getPasswordHash());
+        params.put("name", entity.getName());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -69,10 +70,11 @@ public class UsersRepositoryImpl implements UsersRepository<User>{
 
     @Override
     public void update(User entity) {
-        String sql = "UPDATE users SET email = :email, password_hash = :password_hash WHERE id = :id";
+        String sql = "UPDATE users SET name = :name, email = :email, password_hash = :password_hash WHERE id = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", entity.getId());
         params.put("email", entity.getEmail());
+        params.put("name", entity.getName());
         params.put("password_hash", entity.getPasswordHash());
         namedParameterJdbcTemplate.update(
                 sql, params);
