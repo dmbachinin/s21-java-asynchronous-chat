@@ -56,11 +56,7 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
         params.put("userId", userId);
-        int modifiedLines = namedParameterJdbcTemplate.update(sql, params);
-        if (modifiedLines > 0) {
-            updateLastRoom(userId, roomId);
-        }
-        return modifiedLines > 0;
+        return namedParameterJdbcTemplate.update(sql, params) > 0;
     }
 
     @Override
@@ -73,12 +69,19 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
     }
 
     @Override
-    public boolean updateLastRoom(Long userId, Long roomId) {
-        String sql = "UPDATE users SET last_room_id = :room_id WHERE id = :user_id";
+    public Optional<ChatRoom> getLastVisitRoom(Long userId) {
+        String sql = "SELECT * FROM user_chat_rooms ucr " +
+                "JOIN chat_rooms cr ON ucr.room_id = cr.id " +
+                "WHERE ucr.user_id = :user_id " +
+                "ORDER BY ucr.joined_at LIMIT 1";
         Map<String, Object> params = new HashMap<>();
-        params.put("room_id", roomId);
         params.put("user_id", userId);
-        return namedParameterJdbcTemplate.update(sql, params) > 0;
+        List<ChatRoom> chatRooms = namedParameterJdbcTemplate.query(
+                sql,
+                params,
+                new ChatRoomRowMapper()
+        );
+        return chatRooms.isEmpty() ? Optional.empty() : Optional.of(chatRooms.get(0));
     }
 
     @Override

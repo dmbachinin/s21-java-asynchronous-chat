@@ -2,8 +2,7 @@ CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(150),
     email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
-    last_room_id BIGINT REFERENCES chat_rooms(id) ON DELETE SET NULL DEFAULT NULL
+    password_hash TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS chat_rooms (

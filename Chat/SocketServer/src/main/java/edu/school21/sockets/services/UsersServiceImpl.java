@@ -17,15 +17,12 @@ import java.util.Optional;
 public class UsersServiceImpl implements UsersService{
 
     private final UsersRepository<User> usersRepository;
-    private final ChatRoomsRepository<ChatRoom> chatRoomsRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UsersServiceImpl(UsersRepository<User> usersRepository,
-                            ChatRoomsRepository<ChatRoom> chatRoomsRepository,
                             PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
-        this.chatRoomsRepository = chatRoomsRepository;
         this.passwordEncoder = passwordEncoder;
     }
 

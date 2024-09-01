@@ -4,6 +4,7 @@ import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ChatRoomsRepository<T> extends CrudRepository<T> {
     List<User> getAllConnectedUser(Long roomId);
@@ -12,7 +13,7 @@ public interface ChatRoomsRepository<T> extends CrudRepository<T> {
 
     boolean addUserToRoom(Long roomId, Long userId);
 
-    boolean updateLastRoom(Long userId, Long roomId);
+    Optional<ChatRoom> getLastVisitRoom(Long userId);
 
     boolean removeUserFromRoom(Long roomId, Long userId);
 }
