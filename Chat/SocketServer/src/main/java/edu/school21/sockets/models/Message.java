@@ -4,17 +4,15 @@ import java.sql.Timestamp;
 
 public class Message {
     private Long id;
-    private Long roomId;
-    private Long userId;
+    private ChatRoom room;
+    private User user;
     private String content;
     private Timestamp createdAt;
 
     public Message() {}
 
-    public Message(Long id, Long room_id, Long user_id, String content, Timestamp created_at) {
+    public Message(Long id, String content, Timestamp created_at) {
         this.id = id;
-        this.roomId = room_id;
-        this.userId = user_id;
         this.content = content;
         this.createdAt = created_at;
     }
@@ -27,20 +25,20 @@ public class Message {
         this.id = id;
     }
 
-    public Long getRoomId() {
-        return roomId;
+    public ChatRoom getRoom() {
+        return room;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public void setRoom(ChatRoom room) {
+        this.room = room;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getContent() {
@@ -57,5 +55,16 @@ public class Message {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", room=" + room +
+                ", user=" + user +
+                ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

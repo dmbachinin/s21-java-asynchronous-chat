@@ -4,16 +4,15 @@ import java.sql.Timestamp;
 
 public class ChatRoom {
     private Long id;
-    private Long creatorId;
+    private User creator;
     private String name;
     private String description;
     private Timestamp createdAt;
 
     public ChatRoom() {}
 
-    public ChatRoom(Long id, Long creator_id, String name, String description, Timestamp created_at) {
+    public ChatRoom(Long id, String name, String description, Timestamp created_at) {
         this.id = id;
-        this.creatorId = creator_id;
         this.name = name;
         this.description = description;
         this.createdAt = created_at;
@@ -27,12 +26,12 @@ public class ChatRoom {
         this.id = id;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     public String getName() {
@@ -63,7 +62,7 @@ public class ChatRoom {
     public String toString() {
         return "ChatRoom{" +
                 "id=" + id +
-                ", creator_id=" + creatorId +
+                ", creator=" + creator +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", created_at=" + createdAt +

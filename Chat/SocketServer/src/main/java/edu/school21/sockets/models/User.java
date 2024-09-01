@@ -6,7 +6,12 @@ public class User {
     private String name;
     private String passwordHash;
 
-    public User() {}
+    public User() {
+        this.id = null;
+        this.email = null;
+        this.name = null;
+        this.passwordHash = null;
+    }
 
 
     public User(Long id, String name, String email, String passwordHash) {

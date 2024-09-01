@@ -31,7 +31,11 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
 
     @Override
     public Optional<Message> findById(Long id) {
-        String sql = "SELECT * FROM messages WHERE id = :id";
+        String sql = "SELECT m.*, u.*, c.* " +
+                "FROM messages m " +
+                "JOIN users u ON m.user_id = u.id " +
+                "JOIN chat_rooms c ON m.room_id = c.id " +
+                "WHERE m.id = ?";
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         List<Message> messages = namedParameterJdbcTemplate.query(
@@ -44,15 +48,19 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
 
     @Override
     public List<Message> findAll() {
-        return jdbcTemplate.query("SELECT * FROM messages", new MessageRowMapper());
+        String sql = "SELECT m.*, u.*, c.* " +
+                "FROM messages m " +
+                "JOIN users u ON m.user_id = u.id " +
+                "JOIN chat_rooms c ON m.room_id = c.id ";
+        return jdbcTemplate.query(sql, new MessageRowMapper());
     }
 
     @Override
     public void save(Message entity) {
         String sql = "INSERT INTO messages(room_id, user_id, content) VALUES (:room_id, :user_id, :content)";
         Map<String, Object> params = new HashMap<>();
-        params.put("room_id", entity.getRoomId());
-        params.put("user_id", entity.getUserId());
+        params.put("room_id", entity.getRoom().getId());
+        params.put("user_id", entity.getUser().getId());
         params.put("content", entity.getContent());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -80,7 +88,7 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
         params.put("id", entity.getId());
         params.put("room_id", entity.getContent());
         params.put("content", entity.getContent());
-        params.put("user_id", entity.getUserId());
+        params.put("user_id", entity.getUser().getId());
         params.put("created_at", entity.getCreatedAt());
         namedParameterJdbcTemplate.update(
                 sql, params);
@@ -97,8 +105,11 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
 
     @Override
     public List<Message> getMessagesByRoom(Long roomId, int page, int size) {
-        // SQL-запрос с поддержкой постраничной выборки
-        String sql = "SELECT * FROM messages WHERE room_id = :room_id ORDER BY created_at DESC LIMIT :size OFFSET :offset";
+        String sql = "SELECT m.*, u.*, c.* " +
+                "FROM messages m " +
+                "JOIN users u ON m.user_id = u.id " +
+                "JOIN chat_rooms c ON m.room_id = c.id " +
+                "WHERE m.room_id = :room_id ORDER BY m.created_at DESC LIMIT :size OFFSET :offset";
 
         int offset = (page - 1) * size;
 

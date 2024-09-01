@@ -69,11 +69,7 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
         params.put("userId", userId);
-        int modifiedLines = namedParameterJdbcTemplate.update(sql, params);
-        if (modifiedLines > 0) {
-            updateLastRoom(userId, null);
-        }
-        return modifiedLines > 0;
+        return namedParameterJdbcTemplate.update(sql, params) > 0;
     }
 
     @Override
@@ -87,7 +83,10 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public Optional<ChatRoom> findById(Long id) {
-        String sql = "SELECT * FROM chat_rooms WHERE id = :id";
+        String sql = "SELECT c.*, u.*" +
+                "FROM chat_rooms c " +
+                "JOIN users u ON c.creator_id = u.id " +
+                "WHERE c.id = ?";
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         List<ChatRoom> chatRooms = namedParameterJdbcTemplate.query(
@@ -100,7 +99,9 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public List<ChatRoom> findAll() {
-        String sql = "SELECT * FROM chat_rooms";
+        String sql = "SELECT c.*, u.*" +
+                "FROM chat_rooms c " +
+                "JOIN users u ON c.creator_id = u.id";
         return jdbcTemplate.query(sql, new ChatRoomRowMapper());
     }
 
@@ -110,7 +111,7 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
                 "VALUES (:creator_id, :name, :description)";
 
         Map<String, Object> params = new HashMap<>();
-        params.put("creator_id", entity.getCreatorId());
+        params.put("creator_id", entity.getCreator().getId());
         params.put("name", entity.getName());
         params.put("description", entity.getDescription());
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -142,7 +143,7 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
                 "WHERE id = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", entity.getId());
-        params.put("creator_id", entity.getCreatorId());
+        params.put("creator_id", entity.getCreator().getId());
         params.put("name", entity.getName());
         params.put("description", entity.getDescription());
         params.put("created_at", entity.getCreatedAt());

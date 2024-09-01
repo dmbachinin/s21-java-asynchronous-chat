@@ -3,6 +3,7 @@ package edu.school21.sockets.services;
 import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.models.User;
 import edu.school21.sockets.repositories.ChatRoomsRepository;
+import edu.school21.sockets.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +13,13 @@ import java.util.Optional;
 @Component("chatRoomService")
 public class ChatRoomServiceImpl implements ChatRoomService{
     private final ChatRoomsRepository<ChatRoom> chatRoomChatRoomsRepository;
+    private final UsersRepository<User> usersRepository;
 
     @Autowired
-    public ChatRoomServiceImpl(ChatRoomsRepository<ChatRoom> chatRoomChatRoomsRepository) {
+    public ChatRoomServiceImpl(ChatRoomsRepository<ChatRoom> chatRoomChatRoomsRepository,
+                               UsersRepository<User> usersRepository) {
         this.chatRoomChatRoomsRepository = chatRoomChatRoomsRepository;
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -23,7 +27,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         ChatRoom newChatRoom = new ChatRoom();
         newChatRoom.setName(name);
         newChatRoom.setDescription(description);
-        newChatRoom.setCreatorId(creatorId);
+        newChatRoom.setCreator(usersRepository.findById(creatorId).orElseGet(User::new));
         Optional<ChatRoom> result = Optional.empty();
         try {
             chatRoomChatRoomsRepository.save(newChatRoom);
