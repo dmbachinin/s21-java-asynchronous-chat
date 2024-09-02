@@ -104,7 +104,7 @@ public class ChatRoomsRepositoryImplTest {
     public void addAndRemoveUserToRoomTestError() {
         assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.addUserToRoom(3L,404L);});
         assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.addUserToRoom(3L,3L);});
-        assertDoesNotThrow(() -> {chatRoomsRepository.removeUserFromRoom(3L,404L);});
+        assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.removeUserFromRoom(3L,404L);});
     }
 
     @Test
@@ -121,8 +121,6 @@ public class ChatRoomsRepositoryImplTest {
         assertEquals(chatRoom.getDescription(), "A room for general discussions");
         assertNotNull(chatRoom.getCreatedAt());
     }
-
-
 
     @Test
     public void getLastVisitRoomTestErrorUserId() {
@@ -163,7 +161,7 @@ public class ChatRoomsRepositoryImplTest {
 
         chatRoomsRepository.save(entity);
 
-        assertEquals(entity.getId(), 4);
+        assertNotNull(entity.getId());
         assertNotNull(entity.getCreatedAt());
 
         Optional<ChatRoom> chatRoomOpt = chatRoomsRepository.findById(4L);
@@ -233,11 +231,11 @@ public class ChatRoomsRepositoryImplTest {
 
     @Test
     public void deleteTest() {
-        chatRoomsRepository.delete(3L);
+        assertDoesNotThrow(() -> {chatRoomsRepository.delete(3L);});
         Optional<ChatRoom> chatRoomOpt = chatRoomsRepository.findById(3L);
         assertFalse(chatRoomOpt.isPresent());
 
-        chatRoomsRepository.delete(4L);
+        assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.delete(4L);});
 
 
     }

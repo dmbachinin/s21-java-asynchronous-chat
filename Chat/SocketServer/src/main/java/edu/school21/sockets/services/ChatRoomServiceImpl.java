@@ -28,7 +28,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         ChatRoom newChatRoom = new ChatRoom();
         newChatRoom.setName(name);
         newChatRoom.setDescription(description);
-        newChatRoom.setCreator(usersRepository.findById(creatorId).orElseGet(User::new));
+        User user = usersRepository.findById(creatorId).orElseGet(User::new);
+        if (user.getId() == null) {
+            return Optional.empty();
+        }
+        newChatRoom.setCreator(user);
         Optional<ChatRoom> result = Optional.empty();
         try {
             chatRoomChatRoomsRepository.save(newChatRoom);
@@ -45,8 +49,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         boolean deleteStatus = true;
         try {
             chatRoomChatRoomsRepository.delete(roomId);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DataIntegrityViolationException e) {
             deleteStatus = false;
         }
         return deleteStatus;
@@ -87,5 +90,10 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     @Override
     public List<User> getAllConnectedUser(Long roomId) {
         return chatRoomChatRoomsRepository.getAllConnectedUser(roomId);
+    }
+
+    @Override
+    public Optional<ChatRoom> getLastVisitRoom(Long userId) {
+        return chatRoomChatRoomsRepository.getLastVisitRoom(userId);
     }
 }

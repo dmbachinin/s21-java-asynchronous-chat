@@ -1,5 +1,6 @@
 package edu.school21.sockets.services;
 
+import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.models.User;
 
 import java.util.Optional;

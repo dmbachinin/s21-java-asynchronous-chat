@@ -13,14 +13,14 @@ VALUES
     (3, 3, 'Random', 'A room for random conversations');
 
 -- Вставка связей пользователей с комнатами
-INSERT INTO user_chat_rooms (user_id, room_id)
+INSERT INTO user_chat_rooms (id, user_id, room_id)
 VALUES
-    (1, 2), -- Alice in General Chat
-    (2, 1), -- Bob in General Chat
-    (3, 1), -- Charlie in General Chat
-    (1, 1), -- Alice in Tech Talk
-    (2, 2), -- Bob in Tech Talk
-    (3, 3); -- Charlie in Random
+    (1, 1, 2), -- Alice in General Chat
+    (2, 2, 1), -- Bob in General Chat
+    (3, 3, 1), -- Charlie in General Chat
+    (4, 1, 1), -- Alice in Tech Talk
+    (5, 2, 2), -- Bob in Tech Talk
+    (6, 3, 3); -- Charlie in Random
 
 -- Вставка тестовых сообщений
 INSERT INTO messages (id, room_id, user_id, content)

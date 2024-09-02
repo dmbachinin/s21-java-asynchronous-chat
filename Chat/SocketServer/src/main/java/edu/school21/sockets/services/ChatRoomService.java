@@ -18,4 +18,6 @@ public interface ChatRoomService {
     List<ChatRoom> findUserChatRooms(Long userId);
 
     List<User> getAllConnectedUser(Long roomId);
+
+    Optional<ChatRoom> getLastVisitRoom(Long userId);
 }
