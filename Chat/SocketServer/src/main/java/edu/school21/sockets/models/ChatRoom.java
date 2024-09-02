@@ -11,7 +11,13 @@ public class ChatRoom {
     private String description;
     private Timestamp createdAt;
 
-    public ChatRoom() {}
+    public ChatRoom() {
+        id = null;
+        creator = new User();
+        name = null;
+        description = null;
+        createdAt = null;
+    }
 
     public ChatRoom(Long id, String name, String description, Timestamp created_at) {
         this.id = id;

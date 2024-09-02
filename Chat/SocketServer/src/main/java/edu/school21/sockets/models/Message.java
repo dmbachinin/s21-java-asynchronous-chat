@@ -11,7 +11,13 @@ public class Message {
     private String content;
     private Timestamp createdAt;
 
-    public Message() {}
+    public Message() {
+        id = null;
+        room = new ChatRoom();
+        user = new User();
+        content = null;
+        createdAt = null;
+    }
 
     public Message(Long id, String content, Timestamp created_at) {
         this.id = id;

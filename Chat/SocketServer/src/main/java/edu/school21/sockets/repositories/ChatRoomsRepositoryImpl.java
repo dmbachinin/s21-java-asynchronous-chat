@@ -32,8 +32,10 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public List<User> getAllConnectedUser(Long roomId) {
-        String sql = "SELECT us.* FROM users us " +
-                "JOIN user_chat_rooms ucr ON ucr.user_id = us.id AND ucr.room_id = :roomId ";
+        String sql = "SELECT "
+                +  RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + " FROM users u " +
+                "JOIN user_chat_rooms ucr ON ucr.user_id = u.id AND ucr.room_id = :roomId ";
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
 

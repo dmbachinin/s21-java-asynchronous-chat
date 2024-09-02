@@ -23,13 +23,13 @@ VALUES
     (3, 3); -- Charlie in Random
 
 -- Вставка тестовых сообщений
-INSERT INTO messages (room_id, user_id, content)
+INSERT INTO messages (id, room_id, user_id, content)
 VALUES
-    (1, 1, 'Hello everyone!'), -- Alice in General Chat
-    (1, 2, 'Hi Alice!'), -- Bob in General Chat
-    (1, 3, 'Hey folks!'), -- Charlie in General Chat
-    (2, 1, 'Anyone here into Java?'), -- Alice in Tech Talk
-    (2, 2, 'I am! Let s talk about Spring.'), -- Bob in Tech Talk
-    (3, 3, 'What s up?'); -- Charlie in Random
+    (1, 1, 1, 'Hello everyone!'), -- Alice in General Chat
+    (2, 1, 2, 'Hi Alice!'), -- Bob in General Chat
+    (3, 1, 3, 'Hey folks!'), -- Charlie in General Chat
+    (4, 2, 1, 'Anyone here into Java?'), -- Alice in Tech Talk
+    (5, 2, 2, 'I am! Let s talk about Spring.'), -- Bob in Tech Talk
+    (6, 3, 3, 'What s up?'); -- Charlie in Random
 
 

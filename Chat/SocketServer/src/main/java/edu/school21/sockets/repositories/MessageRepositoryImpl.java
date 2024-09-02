@@ -1,5 +1,6 @@
 package edu.school21.sockets.repositories;
 
+import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.models.Message;
 import edu.school21.sockets.models.User;
 import edu.school21.sockets.rowMappers.MessageRowMapper;
@@ -31,11 +32,16 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
 
     @Override
     public Optional<Message> findById(Long id) {
-        String sql = "SELECT m.*, u.*, c.* " +
-                "FROM messages m " +
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("m", Message.getCOLUMN_NAME(), Message.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("c", ChatRoom.getCOLUMN_NAME(), ChatRoom.getTABLE_NAME())
+                + " FROM messages m " +
                 "JOIN users u ON m.user_id = u.id " +
                 "JOIN chat_rooms c ON m.room_id = c.id " +
-                "WHERE m.id = ?";
+                "WHERE m.id = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         List<Message> messages = namedParameterJdbcTemplate.query(
@@ -48,8 +54,13 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
 
     @Override
     public List<Message> findAll() {
-        String sql = "SELECT m.*, u.*, c.* " +
-                "FROM messages m " +
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("m", Message.getCOLUMN_NAME(), Message.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("c", ChatRoom.getCOLUMN_NAME(), ChatRoom.getTABLE_NAME())
+                + " FROM messages m " +
                 "JOIN users u ON m.user_id = u.id " +
                 "JOIN chat_rooms c ON m.room_id = c.id ";
         return jdbcTemplate.query(sql, new MessageRowMapper());
@@ -86,7 +97,7 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
                 "created_at = :created_at WHERE id = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", entity.getId());
-        params.put("room_id", entity.getContent());
+        params.put("room_id", entity.getRoom().getId());
         params.put("content", entity.getContent());
         params.put("user_id", entity.getUser().getId());
         params.put("created_at", entity.getCreatedAt());
@@ -105,8 +116,13 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
 
     @Override
     public List<Message> getMessagesByRoom(Long roomId, int page, int size) {
-        String sql = "SELECT m.*, u.*, c.* " +
-                "FROM messages m " +
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("m", Message.getCOLUMN_NAME(), Message.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("c", ChatRoom.getCOLUMN_NAME(), ChatRoom.getTABLE_NAME())
+                + " FROM messages m " +
                 "JOIN users u ON m.user_id = u.id " +
                 "JOIN chat_rooms c ON m.room_id = c.id " +
                 "WHERE m.room_id = :room_id ORDER BY m.created_at DESC LIMIT :size OFFSET :offset";
