@@ -70,7 +70,13 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 
     @Override
     public boolean removeUserFromRoom(Long roomId, Long userId) {
-        return chatRoomChatRoomsRepository.removeUserFromRoom(roomId, userId);
+        boolean removeResult = true;
+        try {
+            chatRoomChatRoomsRepository.removeUserFromRoom(roomId, userId);
+        } catch (DataIntegrityViolationException e) {
+            removeResult = false;
+        }
+        return removeResult;
     }
 
     @Override

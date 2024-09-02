@@ -60,7 +60,7 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public void addUserToRoom(Long roomId, Long userId) {
-        String sql = "INSERT INTO user_chat_rooms(user_id, room_id) VALUES (:roomId, :userId)";
+        String sql = "INSERT INTO user_chat_rooms(user_id, room_id) VALUES (:userId, :roomId)";
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
         params.put("userId", userId);
@@ -68,12 +68,12 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
     }
 
     @Override
-    public boolean removeUserFromRoom(Long roomId, Long userId) {
+    public void removeUserFromRoom(Long roomId, Long userId) {
         String sql = "DELETE FROM user_chat_rooms WHERE user_id = :userId AND room_id = :roomId ";
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
         params.put("userId", userId);
-        return namedParameterJdbcTemplate.update(sql, params) > 0;
+        namedParameterJdbcTemplate.update(sql, params);
     }
 
     @Override

@@ -15,5 +15,5 @@ public interface ChatRoomsRepository<T> extends CrudRepository<T> {
 
     Optional<ChatRoom> getLastVisitRoom(Long userId);
 
-    boolean removeUserFromRoom(Long roomId, Long userId);
+    void removeUserFromRoom(Long roomId, Long userId);
 }

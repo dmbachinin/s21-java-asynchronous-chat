@@ -90,11 +90,21 @@ public class ChatRoomsRepositoryImplTest {
     @Test
     public void addAndRemoveUserToRoomTestCurrentUserId() {
         assertDoesNotThrow(() -> {chatRoomsRepository.addUserToRoom(3L,2L);});
+        List<User> connectedUser = chatRoomsRepository.getAllConnectedUser(3L);
+        System.out.println(connectedUser);
+        assertEquals(connectedUser.size(), 2);
+        assertEquals(connectedUser.get(1).getId(), 2);
+        assertDoesNotThrow(() -> {chatRoomsRepository.removeUserFromRoom(3L,2L);});
+        connectedUser = chatRoomsRepository.getAllConnectedUser(3L);
+        assertEquals(connectedUser.size(), 1);
+        assertEquals(connectedUser.get(0).getId(), 3);
     }
 
     @Test
-    public void addAndRemoveUserToRoomTestErrorUserId() {
+    public void addAndRemoveUserToRoomTestError() {
         assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.addUserToRoom(3L,404L);});
+        assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.addUserToRoom(3L,3L);});
+        assertDoesNotThrow(() -> {chatRoomsRepository.removeUserFromRoom(3L,404L);});
     }
 
     @Test
