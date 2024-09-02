@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Component("usersRepository")
-public class UsersRepositoryImpl implements UsersRepository<User>{
+public class UsersRepositoryImpl implements UsersRepository<User> {
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -33,7 +33,9 @@ public class UsersRepositoryImpl implements UsersRepository<User>{
 
     @Override
     public Optional<User> findById(Long id) {
-        String sql = "SELECT * FROM users WHERE id = :id";
+        String sql = "SELECT "
+            + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+            + " FROM users u WHERE id = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         List<User> users = namedParameterJdbcTemplate.query(
@@ -46,7 +48,10 @@ public class UsersRepositoryImpl implements UsersRepository<User>{
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.query("SELECT * FROM users", new UserRowMapper());
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + " FROM users u";
+        return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
     @Override
@@ -91,7 +96,9 @@ public class UsersRepositoryImpl implements UsersRepository<User>{
 
     @Override
     public Optional<User> findByEmail(String email) {
-        String sql = "SELECT * FROM users WHERE email = :email";
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + " FROM users u WHERE email = :email";
         Map<String, Object> params = new HashMap<>();
         params.put("email", email);
         List<User> users = namedParameterJdbcTemplate.query(

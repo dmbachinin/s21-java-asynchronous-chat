@@ -30,15 +30,26 @@ public class ChatRoomsRepositoryImplTest {
     @Test
     public void getAllConnectedUserTest() {
         List<User> connectedUser = chatRoomsRepository.getAllConnectedUser(1L);
-        User first = connectedUser.get(0);
-        User second = connectedUser.get(1);
-        User third = connectedUser.get(2);
+        User first = connectedUser.get(2);
+        User second = connectedUser.get(0);
+        User third = connectedUser.get(1);
 
         assertEquals(3, connectedUser.size());
 
-        assertEquals(first.getId(), 2);
-        assertEquals(second.getId(), 3);
-        assertEquals(third.getId(), 1);
+        assertEquals(first.getId(), 1);
+        assertEquals(first.getEmail(), "alice@example.com");
+        assertEquals(first.getPasswordHash(), "hashed_password_1");
+        assertEquals(first.getName(), "Alice Smith");
+
+        assertEquals(second.getId(), 2);
+        assertEquals(second.getEmail(), "bob@example.com");
+        assertEquals(second.getPasswordHash(), "hashed_password_2");
+        assertEquals(second.getName(), "Bob Johnson");
+
+        assertEquals(third.getId(), 3);
+        assertEquals(third.getEmail(), "charlie@example.com");
+        assertEquals(third.getPasswordHash(), "hashed_password_3");
+        assertEquals(third.getName(), "Charlie Davis");
     }
 
     @Test
