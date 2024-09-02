@@ -5,6 +5,7 @@ import edu.school21.sockets.models.User;
 import edu.school21.sockets.repositories.ChatRoomsRepository;
 import edu.school21.sockets.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -58,11 +59,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 
     @Override
     public boolean addUserToRoom(Long roomId, Long userId) {
-        boolean addStatus = false;
+        boolean addStatus = true;
         try {
-            addStatus = chatRoomChatRoomsRepository.addUserToRoom(roomId, userId);
-        } catch (Exception e) {
-            e.printStackTrace();
+            chatRoomChatRoomsRepository.addUserToRoom(roomId, userId);
+        } catch (DataIntegrityViolationException e) {
+            addStatus = false;
         }
         return addStatus;
     }

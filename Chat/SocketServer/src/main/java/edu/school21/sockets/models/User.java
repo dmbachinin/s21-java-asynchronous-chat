@@ -1,6 +1,8 @@
 package edu.school21.sockets.models;
 
 public class User {
+    private static final String TABLE_NAME = "user";
+    private static final String[] COLUMN_NAME = {"id", "name", "email", "password_hash"};
     private Long id;
     private String email;
     private String name;
@@ -51,6 +53,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static String getTABLE_NAME() {
+        return TABLE_NAME;
+    }
+
+    public static String[] getCOLUMN_NAME() {
+        return COLUMN_NAME;
     }
 
     @Override

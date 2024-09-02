@@ -11,7 +11,7 @@ public interface ChatRoomsRepository<T> extends CrudRepository<T> {
 
     List<ChatRoom> findUserChatRooms(Long userId);
 
-    boolean addUserToRoom(Long roomId, Long userId);
+    void addUserToRoom(Long roomId, Long userId);
 
     Optional<ChatRoom> getLastVisitRoom(Long userId);
 

@@ -3,6 +3,8 @@ package edu.school21.sockets.models;
 import java.sql.Timestamp;
 
 public class Message {
+    private static final String TABLE_NAME = "messages";
+    private static final String[] COLUMN_NAME = {"id", "room_id", "user_id", "content", "created_at"};
     private Long id;
     private ChatRoom room;
     private User user;
@@ -55,6 +57,14 @@ public class Message {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public static String getTABLE_NAME() {
+        return TABLE_NAME;
+    }
+
+    public static String[] getCOLUMN_NAME() {
+        return COLUMN_NAME;
     }
 
     @Override

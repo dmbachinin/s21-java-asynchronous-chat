@@ -42,21 +42,27 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public List<ChatRoom> findUserChatRooms(Long userId) {
-        String sql = "SELECT cr.* FROM users us " +
-                "JOIN user_chat_rooms ucr ON ucr.user_id = us.id " +
-                "JOIN  chat_rooms cr ON cr.id = ucr.room_id WHERE us.id = :userId";
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u1", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("c", ChatRoom.getCOLUMN_NAME(), ChatRoom.getTABLE_NAME())
+                + " FROM users u " +
+                "JOIN user_chat_rooms ucr ON ucr.user_id = u.id " +
+                "JOIN  chat_rooms c ON c.id = ucr.room_id " +
+                "JOIN  users u1 ON c.creator_id = u1.id " +
+                "WHERE u.id = :userId";
         Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
         return  namedParameterJdbcTemplate.query(sql, params, new ChatRoomRowMapper());
     }
 
     @Override
-    public boolean addUserToRoom(Long roomId, Long userId) {
+    public void addUserToRoom(Long roomId, Long userId) {
         String sql = "INSERT INTO user_chat_rooms(user_id, room_id) VALUES (:roomId, :userId)";
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
         params.put("userId", userId);
-        return namedParameterJdbcTemplate.update(sql, params) > 0;
+        namedParameterJdbcTemplate.update(sql, params);
     }
 
     @Override
@@ -70,8 +76,13 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public Optional<ChatRoom> getLastVisitRoom(Long userId) {
-        String sql = "SELECT * FROM user_chat_rooms ucr " +
-                "JOIN chat_rooms cr ON ucr.room_id = cr.id " +
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("c", ChatRoom.getCOLUMN_NAME(), ChatRoom.getTABLE_NAME())
+                + " FROM user_chat_rooms ucr " +
+                "JOIN chat_rooms c ON ucr.room_id = c.id " +
+                "JOIN users u ON c.creator_id = u.id " +
                 "WHERE ucr.user_id = :user_id " +
                 "ORDER BY ucr.joined_at LIMIT 1";
         Map<String, Object> params = new HashMap<>();
@@ -86,10 +97,13 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public Optional<ChatRoom> findById(Long id) {
-        String sql = "SELECT c.*, u.*" +
-                "FROM chat_rooms c " +
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("c", ChatRoom.getCOLUMN_NAME(), ChatRoom.getTABLE_NAME())
+                + " FROM chat_rooms c " +
                 "JOIN users u ON c.creator_id = u.id " +
-                "WHERE c.id = ?";
+                "WHERE c.id = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         List<ChatRoom> chatRooms = namedParameterJdbcTemplate.query(
@@ -102,8 +116,11 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public List<ChatRoom> findAll() {
-        String sql = "SELECT c.*, u.*" +
-                "FROM chat_rooms c " +
+        String sql = "SELECT "
+                + RequestBuilder.generateColumnNames("u", User.getCOLUMN_NAME(), User.getTABLE_NAME())
+                + ", "
+                + RequestBuilder.generateColumnNames("c", ChatRoom.getCOLUMN_NAME(), ChatRoom.getTABLE_NAME())
+                + " FROM chat_rooms c " +
                 "JOIN users u ON c.creator_id = u.id";
         return jdbcTemplate.query(sql, new ChatRoomRowMapper());
     }
