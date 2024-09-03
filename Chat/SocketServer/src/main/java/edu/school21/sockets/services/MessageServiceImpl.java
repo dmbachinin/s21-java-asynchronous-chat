@@ -7,8 +7,10 @@ import edu.school21.sockets.repositories.ChatRoomsRepository;
 import edu.school21.sockets.repositories.MessageRepository;
 import edu.school21.sockets.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,21 +34,27 @@ public class MessageServiceImpl implements MessageService{
     public Optional<Message> sendMessage(Long roomId, Long senderId, String content) {
         Message newMessage = new Message();
         newMessage.setContent(content);
-        newMessage.setUser(usersRepository.findById(senderId).orElseGet(User::new));
-        newMessage.setRoom(chatRoomsRepository.findById(roomId).orElseGet(ChatRoom::new));
-        Optional<Message> result = Optional.empty();
+        User user = usersRepository.findById(senderId).orElseGet(User::new);
+        ChatRoom room = chatRoomsRepository.findById(roomId).orElseGet(ChatRoom::new);
+        if (user.getId() == null || room.getId() == null) {
+            return Optional.empty();
+        }
+        newMessage.setUser(user);
+        newMessage.setRoom(room);
+        Optional<Message> result = Optional.of(newMessage);
         try {
             messageRepository.save(newMessage);
-            result = Optional.of(newMessage);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DataIntegrityViolationException e) {
+            result = Optional.empty();
         }
-
         return result;
     }
 
     @Override
     public List<Message> getMessagesByRoom(Long roomId, int page, int size) {
+        if (page <= 0 || size <= 0 ) {
+            return new ArrayList<>();
+        }
         return messageRepository.getMessagesByRoom(roomId, page, size);
     }
 
