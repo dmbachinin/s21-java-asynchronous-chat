@@ -1,8 +1,7 @@
 package edu.school21.sockets.server.responseGenerator.responses;
 
-public class MessageResponse implements Response<String> {
+public class MessageResponse {
 
-    @Override
     public String generate(String entity) {
         return entity;
     }

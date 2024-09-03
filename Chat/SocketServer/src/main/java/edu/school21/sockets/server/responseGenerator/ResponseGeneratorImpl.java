@@ -28,10 +28,10 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         String message;
         Map<String, Object> data = new HashMap<>();
         if (Objects.requireNonNull(status) == CommandStatus.OK) {
-            message = new UserInfoResponse().generate(user);
+            message = UserInfoResponse.generateWelcomeMessage(user);
             data.put("id", user.getId());
         } else {
-            message = new ErrorResponse().generate("Пользователь не найден");
+            message = ErrorResponse.generate("Пользователь не найден");
         }
         return messageComposer.generate(status, message, data);
     }
@@ -58,7 +58,8 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
 
     @Override
     public String generateResponseError(String message) {
-        return messageComposer.generate(CommandStatus.ERROR, message, new HashMap<>());
+        return messageComposer.generate(CommandStatus.ERROR,
+                ErrorResponse.generate(message), new HashMap<>());
     }
 
 

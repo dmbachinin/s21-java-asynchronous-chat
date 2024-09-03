@@ -4,9 +4,8 @@ import edu.school21.sockets.models.ChatRoom;
 
 import java.util.List;
 
-public class ChatRoomsResponse implements Response<List<ChatRoom>> {
+public class ChatRoomsResponse {
 
-    @Override
     public String generate(List<ChatRoom> entity) {
         return null;
     }
