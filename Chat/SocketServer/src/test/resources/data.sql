@@ -2,7 +2,7 @@
 INSERT INTO users (id, name, email, password_hash)
 VALUES
     (1, 'Alice Smith', 'alice@example.com', 'hashed_password_1'),
-    (2, 'Bob Johnson', 'bob@example.com', 'hashed_password_2'),
+    (2, 'Bob Johnson', 'bob@example.com', '$2a$10$3JfkDlvwT689lQUyjO55.ea4NswKf2GwqG0vwpfd.3ZUGuhW6Gic2'),
     (3, 'Charlie Davis', 'charlie@example.com', 'hashed_password_3');
 
 -- Вставка тестовых комнат

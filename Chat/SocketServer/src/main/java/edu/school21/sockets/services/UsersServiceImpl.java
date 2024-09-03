@@ -4,6 +4,7 @@ import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.repositories.ChatRoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import edu.school21.sockets.models.User;
@@ -27,22 +28,25 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Override
-    public Optional<User> signUp(String email, String password) {
-        if (usersRepository.findByEmail(email).isPresent()) {
+    public Optional<User> signUp(String email, String name, String password) {
+        if (usersRepository.findByEmail(email).isPresent()
+            || password == null || email == null) {
             return Optional.empty();
         }
         User newUser = new User();
         newUser.setEmail(email);
+        newUser.setName(name);
         String passwordHash = passwordEncoder.encode(password);
         newUser.setPasswordHash(passwordHash);
         usersRepository.save(newUser);
+
         return Optional.of(newUser);
     }
 
     @Override
     public Optional<User> logIn(String email, String password) {
         Optional<User> user = usersRepository.findByEmail(email);
-        if (!user.isPresent()) {
+        if (!user.isPresent() || password == null) {
             return Optional.empty();
         }
         String passwordHash = user.get().getPasswordHash();

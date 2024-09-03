@@ -43,7 +43,7 @@ public class ChatRoomsRepositoryImplTest {
 
         assertEquals(second.getId(), 2);
         assertEquals(second.getEmail(), "bob@example.com");
-        assertEquals(second.getPasswordHash(), "hashed_password_2");
+        assertEquals(second.getPasswordHash(), "$2a$10$3JfkDlvwT689lQUyjO55.ea4NswKf2GwqG0vwpfd.3ZUGuhW6Gic2");
         assertEquals(second.getName(), "Bob Johnson");
 
         assertEquals(third.getId(), 3);
@@ -72,7 +72,7 @@ public class ChatRoomsRepositoryImplTest {
         assertEquals(secondChatRoom.getId(), 2);
         assertEquals(secondChatRoom.getCreator().getId(), 2);
         assertEquals(secondChatRoom.getCreator().getEmail(), "bob@example.com");
-        assertEquals(secondChatRoom.getCreator().getPasswordHash(), "hashed_password_2");
+        assertEquals(secondChatRoom.getCreator().getPasswordHash(), "$2a$10$3JfkDlvwT689lQUyjO55.ea4NswKf2GwqG0vwpfd.3ZUGuhW6Gic2");
         assertEquals(secondChatRoom.getCreator().getName(), "Bob Johnson");
         assertEquals(secondChatRoom.getName(), "Tech Talk");
         assertEquals(secondChatRoom.getDescription(), "A room for tech enthusiasts");
@@ -164,10 +164,10 @@ public class ChatRoomsRepositoryImplTest {
         assertNotNull(entity.getId());
         assertNotNull(entity.getCreatedAt());
 
-        Optional<ChatRoom> chatRoomOpt = chatRoomsRepository.findById(4L);
+        Optional<ChatRoom> chatRoomOpt = chatRoomsRepository.findById(entity.getId());
         assertTrue(chatRoomOpt.isPresent());
         ChatRoom chatRoom = chatRoomOpt.get();
-        assertEquals(chatRoom.getId(), 4);
+        assertEquals(chatRoom.getId(), entity.getId());
         assertEquals(chatRoom.getCreator().getId(), 1);
         assertEquals(chatRoom.getCreator().getEmail(), "alice@example.com");
         assertEquals(chatRoom.getCreator().getPasswordHash(), "hashed_password_1");
@@ -259,7 +259,7 @@ public class ChatRoomsRepositoryImplTest {
         assertEquals(secondChatRoom.getId(), 2);
         assertEquals(secondChatRoom.getCreator().getId(), 2);
         assertEquals(secondChatRoom.getCreator().getEmail(), "bob@example.com");
-        assertEquals(secondChatRoom.getCreator().getPasswordHash(), "hashed_password_2");
+        assertEquals(secondChatRoom.getCreator().getPasswordHash(), "$2a$10$3JfkDlvwT689lQUyjO55.ea4NswKf2GwqG0vwpfd.3ZUGuhW6Gic2");
         assertEquals(secondChatRoom.getCreator().getName(), "Bob Johnson");
         assertEquals(secondChatRoom.getName(), "Tech Talk");
         assertEquals(secondChatRoom.getDescription(), "A room for tech enthusiasts");
