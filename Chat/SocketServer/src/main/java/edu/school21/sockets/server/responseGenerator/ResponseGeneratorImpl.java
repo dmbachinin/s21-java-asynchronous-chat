@@ -4,6 +4,7 @@ import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.models.Message;
 import edu.school21.sockets.models.User;
 import edu.school21.sockets.server.commandHandlers.CommandStatus;
+import edu.school21.sockets.server.communication.ServerResponse;
 import edu.school21.sockets.server.responseGenerator.responses.ErrorResponse;
 import edu.school21.sockets.server.responseGenerator.responses.UserInfoResponse;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     }
 
     @Override
-    public String generateResponse(CommandStatus status, User user) {
+    public ServerResponse generateResponse(CommandStatus status, User user) {
         String message;
         Map<String, Object> data = new HashMap<>();
         if (Objects.requireNonNull(status) == CommandStatus.OK) {
@@ -33,7 +34,7 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         } else {
             message = ErrorResponse.generate("Пользователь не найден");
         }
-        return messageComposer.generate(status, message, data);
+        return  new ServerResponse(status, message, data);
     }
 
     @Override
@@ -57,8 +58,8 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     }
 
     @Override
-    public String generateResponseError(String message) {
-        return messageComposer.generate(CommandStatus.ERROR,
+    public ServerResponse generateResponseError(String message) {
+        return new ServerResponse(CommandStatus.ERROR,
                 ErrorResponse.generate(message), new HashMap<>());
     }
 

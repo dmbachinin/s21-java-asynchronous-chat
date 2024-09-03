@@ -3,17 +3,14 @@ package edu.school21.sockets.server.CommandProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.school21.sockets.server.commandHandlers.CommandHandler;
-import edu.school21.sockets.server.commandHandlers.CommandStatus;
-import edu.school21.sockets.server.commandHandlers.UserCommand;
-import edu.school21.sockets.server.responseGenerator.MessageComposer;
+import edu.school21.sockets.server.communication.ServerResponse;
+import edu.school21.sockets.server.communication.UserCommand;
 import edu.school21.sockets.server.responseGenerator.ResponseGenerator;
 import edu.school21.sockets.services.ChatRoomService;
 import edu.school21.sockets.services.MessageService;
 import edu.school21.sockets.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 
 @Component("commandHandler")
 public class CommandProcessor {
@@ -38,7 +35,7 @@ public class CommandProcessor {
         commandFactory = new CommandFactory(userService, chatRoomService, messageService, responseGenerator);
     }
 
-    public String handeCommand(String jsonCommand) {
+    public ServerResponse handeCommand(String jsonCommand) {
         try {
           UserCommand userCommand =   objectMapper.readValue(jsonCommand, UserCommand.class);
           String command = userCommand.getCommand();

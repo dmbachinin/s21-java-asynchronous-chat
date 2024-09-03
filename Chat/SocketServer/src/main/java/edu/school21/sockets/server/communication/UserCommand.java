@@ -1,4 +1,4 @@
-package edu.school21.sockets.server.commandHandlers;
+package edu.school21.sockets.server.communication;
 
 import java.util.Map;
 

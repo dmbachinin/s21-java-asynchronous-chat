@@ -1,5 +1,8 @@
 package edu.school21.sockets.server.commandHandlers;
 
+import edu.school21.sockets.server.communication.ServerResponse;
+import edu.school21.sockets.server.communication.UserCommand;
+
 public interface CommandHandler {
-    String execute(UserCommand command);
+    ServerResponse execute(UserCommand command);
 }

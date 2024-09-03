@@ -1,5 +1,8 @@
 package edu.school21.sockets.server;
 
+import edu.school21.sockets.server.CommandProcessor.CommandProcessor;
+import edu.school21.sockets.server.communication.ServerResponse;
+import edu.school21.sockets.server.responseGenerator.MessageComposer;
 import edu.school21.sockets.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +17,8 @@ import java.util.concurrent.Executors;
 
 @Component("server")
 public class Server implements Runnable {
-    private final UsersService usersService;
+    private final CommandProcessor processor;
+    private final MessageComposer messageComposer;
     private ServerSocket serverSocket;
     private volatile boolean running = true;
     private final ExecutorService executorService;
@@ -23,8 +27,10 @@ public class Server implements Runnable {
     public Server(
             @Value("${server.port:8081}") int port,
             @Value("${server.threadPool:10}") int threadPool,
-            UsersService usersService) throws IOException {
-        this.usersService = usersService;
+            CommandProcessor processor,
+            MessageComposer messageComposer) throws IOException {
+        this.processor = processor;
+        this.messageComposer = messageComposer;
         serverSocket = new ServerSocket(port);
         executorService = Executors.newFixedThreadPool(threadPool);
     }
@@ -53,12 +59,9 @@ public class Server implements Runnable {
                      new PrintWriter(clientSocket.getOutputStream(),true)) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                if ("exit".equalsIgnoreCase(inputLine)) {
-                    out.println("Goodbye!");
-                    break;
-                }
-                // Обработка других сообщений от клиента
-                out.println("Echo: " + inputLine);
+                ServerResponse response = processor.handeCommand(inputLine);
+                String responseJson = messageComposer.generate(response);
+                out.println(responseJson);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

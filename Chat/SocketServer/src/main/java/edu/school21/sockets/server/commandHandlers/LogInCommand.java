@@ -1,10 +1,9 @@
 package edu.school21.sockets.server.commandHandlers;
 
 import edu.school21.sockets.models.User;
-import edu.school21.sockets.server.responseGenerator.MessageComposer;
+import edu.school21.sockets.server.communication.ServerResponse;
+import edu.school21.sockets.server.communication.UserCommand;
 import edu.school21.sockets.server.responseGenerator.ResponseGenerator;
-import edu.school21.sockets.server.responseGenerator.responses.ErrorResponse;
-import edu.school21.sockets.server.responseGenerator.responses.UserInfoResponse;
 import edu.school21.sockets.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +25,7 @@ public class LogInCommand implements CommandHandler {
     }
 
     @Override
-    public String execute(UserCommand command) {
+    public ServerResponse execute(UserCommand command) {
         Map<String, Object> parameters = command.getParameters();
         if (checkParameters(parameters)) {
             return responseGenerator.generateResponseError("Ошибка запроса");
