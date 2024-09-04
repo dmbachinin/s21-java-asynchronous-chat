@@ -11,10 +11,7 @@ import edu.school21.sockets.server.responseGenerator.responses.MessageResponse;
 import edu.school21.sockets.server.responseGenerator.responses.UserInfoResponse;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Component("responseGenerator")
 public class ResponseGeneratorImpl implements ResponseGenerator {
@@ -47,8 +44,16 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     }
 
     @Override
-    public String generateResponseForChatRooms(CommandStatus status, List<ChatRoom> chatRoomList) {
-        return null;
+    public ServerResponse generateResponseForChatRooms(CommandStatus status, List<ChatRoom> chatRoomList) {
+        Map<String, Object> data = new HashMap<>();
+        List<Long> chatRoomsId = new ArrayList<>();
+        if (status == CommandStatus.OK) {
+            for (ChatRoom chatRoom : chatRoomList) {
+                chatRoomsId.add(chatRoom.getId());
+            }
+            data.put("roomsId", chatRoomsId);
+        }
+        return new ServerResponse(status, ChatRoomsResponse.generate(chatRoomList), data);
     }
 
     @Override
