@@ -59,6 +59,7 @@ public class CreateRoomCommandTest {
 
         ServerResponse responseCurrent = new ServerResponse();
         responseCurrent.setStatus(CommandStatus.OK);
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.addData("chatId", 4L);
 
         assertEquals(responseCurrent, response);
@@ -82,6 +83,7 @@ public class CreateRoomCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);
@@ -103,6 +105,7 @@ public class CreateRoomCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);

@@ -46,14 +46,14 @@ public class GetMessagesCommandTest {
     public void CurrentTest() {
         Message message_1 = new Message();
         message_1.setId(1L);
-        message_1.setUser(new User(1L,"User1",null,null));
-        message_1.setRoom(new ChatRoom(1L,null,null,null));
+        message_1.setUser(new User(1L, "User1", null, null));
+        message_1.setRoom(new ChatRoom(1L, null, null, null));
         message_1.setContent("HI!!!");
 
         Message message_2 = new Message();
         message_2.setId(2L);
-        message_2.setUser(new User(2L,"User2",null,null));
-        message_2.setRoom(new ChatRoom(1L,null,null,null));
+        message_2.setUser(new User(2L, "User2", null, null));
+        message_2.setRoom(new ChatRoom(1L, null, null, null));
         message_2.setContent("Hello!");
 
         List<Message> messageList = new ArrayList<>();
@@ -74,9 +74,10 @@ public class GetMessagesCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
 
-        List<Map<String, Object>> result =  new ArrayList<>();
+        List<Map<String, Object>> result = new ArrayList<>();
         Map<String, Object> message_1_map = new HashMap<>();
         message_1_map.put("roomId", 1L);
         message_1_map.put("senderName", "User1");
@@ -113,6 +114,7 @@ public class GetMessagesCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);

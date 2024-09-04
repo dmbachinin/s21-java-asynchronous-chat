@@ -9,12 +9,12 @@ import edu.school21.sockets.server.communication.ServerResponse;
 import java.util.List;
 
 public interface ResponseGenerator {
-    ServerResponse generateResponse(CommandStatus status, User user);
-    ServerResponse generateResponse(CommandStatus status, ChatRoom chatRoom);
-    ServerResponse generateResponseForChatRooms(CommandStatus status, List<ChatRoom> chatRoomList);
+    ServerResponse generateResponse(String command, CommandStatus status, User user);
+    ServerResponse generateResponse(String command, CommandStatus status, ChatRoom chatRoom);
+    ServerResponse generateResponseForChatRooms(String command, CommandStatus status, List<ChatRoom> chatRoomList);
 
-    ServerResponse generateResponse(CommandStatus status, Message message);
-    ServerResponse generateResponseForMessages(CommandStatus status, List<Message> messageList);
-    ServerResponse generateResponseError(String message);
-    ServerResponse generateResponseMessage(String message);
+    ServerResponse generateResponse(String command, CommandStatus status, Message message);
+    ServerResponse generateResponseForMessages(String command, CommandStatus status, List<Message> messageList);
+    ServerResponse generateResponseError(String command, String message);
+    ServerResponse generateResponseMessage(String command, String message);
 }

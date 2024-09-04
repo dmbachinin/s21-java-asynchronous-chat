@@ -59,6 +59,9 @@ public class Server implements Runnable {
                      new PrintWriter(clientSocket.getOutputStream(),true)) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
+                if ("exit".equalsIgnoreCase(inputLine)) {
+                    break;
+                }
                 ServerResponse response = processor.handeCommand(inputLine);
                 String responseJson = messageComposer.generate(response);
                 out.println(responseJson);

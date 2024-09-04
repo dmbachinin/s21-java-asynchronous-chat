@@ -43,7 +43,7 @@ public class SendMessageCommandTest {
     @Test
     public void CurrentTest() {
         Message message = new Message();
-        when(mockService.sendMessage(2L, 2L,"message"))
+        when(mockService.sendMessage(2L, 2L, "message"))
                 .thenReturn(Optional.of(message))
         ;
 
@@ -57,16 +57,17 @@ public class SendMessageCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
 
         assertEquals(responseCurrent, response);
 
-        verify(mockService).sendMessage(2L, 2L,"message");
+        verify(mockService).sendMessage(2L, 2L, "message");
     }
 
     @Test
     public void ErrorCreatorIdTest() {
-        when(mockService.sendMessage(404L, 2L,"message"))
+        when(mockService.sendMessage(404L, 2L, "message"))
                 .thenReturn(Optional.empty())
         ;
 
@@ -80,10 +81,11 @@ public class SendMessageCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);
 
-        verify(mockService).sendMessage(404L, 2L,"message");
+        verify(mockService).sendMessage(404L, 2L, "message");
     }
 }

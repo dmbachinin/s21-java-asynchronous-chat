@@ -28,6 +28,7 @@ public class CommandFactory {
         commandHandlers.put("GET_ROOMS", new JoinTheRoomCommand(chatService, responseGenerator));
         commandHandlers.put("SEND_MESSAGE", new SendMessageCommand(messageService, responseGenerator));
         commandHandlers.put("GET_MESSAGE", new GetMessagesCommand(messageService, responseGenerator));
+        commandHandlers.put("GET_LAST_VISIT_ROOM", new GetMessagesCommand(messageService, responseGenerator));
     }
 
     public CommandHandler getCommandHandler(String command) {

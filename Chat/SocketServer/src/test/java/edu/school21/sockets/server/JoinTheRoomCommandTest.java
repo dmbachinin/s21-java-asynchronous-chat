@@ -53,6 +53,7 @@ public class JoinTheRoomCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
 
         assertEquals(responseCurrent, response);
@@ -75,6 +76,7 @@ public class JoinTheRoomCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);
@@ -93,6 +95,7 @@ public class JoinTheRoomCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);

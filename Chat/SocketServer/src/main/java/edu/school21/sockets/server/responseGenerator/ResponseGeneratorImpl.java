@@ -16,7 +16,7 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     private final String separator = "-----------------------------";
 
     @Override
-    public ServerResponse generateResponse(CommandStatus status, User user) {
+    public ServerResponse generateResponse(String command, CommandStatus status, User user) {
         String message;
         Map<String, Object> data = new HashMap<>();
         if (Objects.requireNonNull(status) == CommandStatus.OK) {
@@ -25,11 +25,11 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         } else {
             message = ErrorResponse.generate("Пользователь не найден");
         }
-        return  new ServerResponse(status, message, data);
+        return  new ServerResponse(command, status, message, data);
     }
 
     @Override
-    public ServerResponse generateResponse(CommandStatus status, ChatRoom chatRoom) {
+    public ServerResponse generateResponse(String command, CommandStatus status, ChatRoom chatRoom) {
         String message;
         Map<String, Object> data = new HashMap<>();
         if (Objects.requireNonNull(status) == CommandStatus.OK) {
@@ -38,11 +38,11 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         } else {
             message = ErrorResponse.generate("Пользователь не найден");
         }
-        return new ServerResponse(status, message, data);
+        return new ServerResponse(command, status, message, data);
     }
 
     @Override
-    public ServerResponse generateResponseForChatRooms(CommandStatus status, List<ChatRoom> chatRoomList) {
+    public ServerResponse generateResponseForChatRooms(String command, CommandStatus status, List<ChatRoom> chatRoomList) {
         Map<String, Object> data = new HashMap<>();
         List<Map<String, Object>> chatRooms = new ArrayList<>();
         if (status == CommandStatus.OK) {
@@ -54,16 +54,16 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
             }
             data.put("rooms", chatRooms);
         }
-        return new ServerResponse(status, null, data);
+        return new ServerResponse(command, status, null, data);
     }
 
     @Override
-    public ServerResponse generateResponse(CommandStatus status, Message message) {
-        return  new ServerResponse(status, MessageResponse.generate(message), new HashMap<>());
+    public ServerResponse generateResponse(String command, CommandStatus status, Message message) {
+        return  new ServerResponse(command, status, MessageResponse.generate(message), new HashMap<>());
     }
 
     @Override
-    public ServerResponse generateResponseForMessages(CommandStatus status, List<Message> messageList) {
+    public ServerResponse generateResponseForMessages(String command, CommandStatus status, List<Message> messageList) {
         Map<String, Object> data = new HashMap<>();
         List<Map<String, Object>> messages = new ArrayList<>();
         if (status == CommandStatus.OK) {
@@ -77,18 +77,18 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
             }
             data.put("messages", messages);
         }
-        return new ServerResponse(status, null, data);
+        return new ServerResponse(command, status, null, data);
     }
 
     @Override
-    public ServerResponse generateResponseError(String message) {
-        return new ServerResponse(CommandStatus.ERROR,
+    public ServerResponse generateResponseError(String command, String message) {
+        return new ServerResponse(command, CommandStatus.ERROR,
                 ErrorResponse.generate(message), new HashMap<>());
     }
 
     @Override
-    public ServerResponse generateResponseMessage(String message) {
-        return new ServerResponse(CommandStatus.OK,
+    public ServerResponse generateResponseMessage(String command, String message) {
+        return new ServerResponse(command, CommandStatus.OK,
                 InfoResponse.generate(message), new HashMap<>());
     }
 

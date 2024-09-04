@@ -45,7 +45,7 @@ public class CommandProcessor {
         } catch (JsonProcessingException  e) {
             e.printStackTrace();
         }
-        return responseGenerator.generateResponseError("Неизвестная команда");
+        return responseGenerator.generateResponseError("UNKNOWN_COMMAND", "Неизвестная команда");
     }
 
 }

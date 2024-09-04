@@ -55,6 +55,7 @@ public class LogInCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
         responseCurrent.addData("userId", 2L);
 
@@ -78,6 +79,7 @@ public class LogInCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.NOT_FOUND);
 
         assertEquals(responseCurrent, response);
@@ -96,6 +98,7 @@ public class LogInCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);

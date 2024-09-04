@@ -43,7 +43,7 @@ public class SingUpCommandTest {
     public void CurrentTest() {
         User user = new User();
         user.setId(4L);
-        when(mockService.signUp("new@example.com", "new USER","hashed_password_2"))
+        when(mockService.signUp("new@example.com", "new USER", "hashed_password_2"))
                 .thenReturn(Optional.of(user))
         ;
 
@@ -57,12 +57,13 @@ public class SingUpCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
         responseCurrent.addData("userId", 4L);
 
         assertEquals(responseCurrent, response);
 
-        verify(mockService).signUp("new@example.com", "new USER","hashed_password_2");
+        verify(mockService).signUp("new@example.com", "new USER", "hashed_password_2");
     }
 
     @Test
@@ -81,6 +82,7 @@ public class SingUpCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);
@@ -99,6 +101,7 @@ public class SingUpCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);

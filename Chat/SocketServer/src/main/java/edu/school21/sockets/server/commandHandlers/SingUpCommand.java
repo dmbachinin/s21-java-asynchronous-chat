@@ -28,14 +28,14 @@ public class SingUpCommand implements CommandHandler {
     public ServerResponse execute(UserCommand command) {
         Map<String, Object> parameters = command.getParameters();
         if (checkParameters(parameters)) {
-            return responseGenerator.generateResponseError("Ошибка запроса");
+            return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
         String email = (String) parameters.get("email");
         String password = (String) parameters.get("password");
         String name = (String) parameters.get("name");
         Optional<User> userOptional = usersService.signUp(email, name, password);
         CommandStatus commandStatus = userOptional.isPresent() ? CommandStatus.OK : CommandStatus.ERROR;
-        return responseGenerator.generateResponse(commandStatus, userOptional.orElseGet(User::new));
+        return responseGenerator.generateResponse(command.getCommand(), commandStatus, userOptional.orElseGet(User::new));
     }
 
     public boolean checkParameters(Map<String, Object> parameters) {

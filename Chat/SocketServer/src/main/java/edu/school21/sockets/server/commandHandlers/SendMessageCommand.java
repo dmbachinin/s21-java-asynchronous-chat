@@ -31,14 +31,14 @@ public class SendMessageCommand implements CommandHandler {
     public ServerResponse execute(UserCommand command) {
         Map<String, Object> parameters = command.getParameters();
         if (checkParameters(parameters)) {
-            return responseGenerator.generateResponseError("Ошибка запроса");
+            return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
         Long roomId = (Long) parameters.get("roomId");
         Long senderId = (Long) parameters.get("senderId");
         String content = (String) parameters.get("content");
         Optional<Message> optional = messageService.sendMessage(roomId, senderId, content);
         CommandStatus commandStatus = optional.isPresent() ? CommandStatus.OK : CommandStatus.ERROR;
-        return responseGenerator.generateResponse(commandStatus, optional.orElseGet(Message::new));
+        return responseGenerator.generateResponse(command.getCommand(),commandStatus, optional.orElseGet(Message::new));
     }
 
     public boolean checkParameters(Map<String, Object> parameters) {

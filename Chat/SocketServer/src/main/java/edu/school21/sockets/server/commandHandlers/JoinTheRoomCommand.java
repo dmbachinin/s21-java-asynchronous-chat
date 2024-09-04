@@ -28,15 +28,15 @@ public class JoinTheRoomCommand implements CommandHandler {
     public ServerResponse execute(UserCommand command) {
         Map<String, Object> parameters = command.getParameters();
         if (checkParameters(parameters)) {
-            return responseGenerator.generateResponseError("Ошибка запроса");
+            return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
         Long roomId = (Long) parameters.get("roomId");
         Long userID = (Long) parameters.get("userId");
         ServerResponse result;
         if (chatRoomService.addUserToRoom(roomId, userID)) {
-            result = responseGenerator.generateResponseMessage("Пользователь добавлен в чат");
+            result = responseGenerator.generateResponseMessage(command.getCommand(),"Пользователь добавлен в чат");
         } else {
-            result = responseGenerator.generateResponseError("Ошибка при добавлении пользователя");
+            result = responseGenerator.generateResponseError(command.getCommand(),"Ошибка при добавлении пользователя");
         }
         return result;
     }

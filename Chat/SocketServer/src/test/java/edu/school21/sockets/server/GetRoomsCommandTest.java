@@ -40,10 +40,16 @@ public class GetRoomsCommandTest {
 
     @Test
     public void CurrentTest() {
-        ChatRoom chatRoom_1 = new ChatRoom(); chatRoom_1.setId(1L); chatRoom_1.setName("1");
-        ChatRoom chatRoom_2 = new ChatRoom(); chatRoom_2.setId(2L); chatRoom_2.setName("2");
-        ChatRoom chatRoom_3 = new ChatRoom(); chatRoom_3.setId(3L); chatRoom_3.setName("3");
-        List<ChatRoom> chatRoomList =  new ArrayList<>();
+        ChatRoom chatRoom_1 = new ChatRoom();
+        chatRoom_1.setId(1L);
+        chatRoom_1.setName("1");
+        ChatRoom chatRoom_2 = new ChatRoom();
+        chatRoom_2.setId(2L);
+        chatRoom_2.setName("2");
+        ChatRoom chatRoom_3 = new ChatRoom();
+        chatRoom_3.setId(3L);
+        chatRoom_3.setName("3");
+        List<ChatRoom> chatRoomList = new ArrayList<>();
         chatRoomList.add(chatRoom_1);
         chatRoomList.add(chatRoom_2);
         chatRoomList.add(chatRoom_3);
@@ -59,11 +65,18 @@ public class GetRoomsCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
-        List<Map<String, Object>> result =  new ArrayList<>();
-        Map<String, Object> chatRoom_1_map = new HashMap<>(); chatRoom_1_map.put("roomId", 1L); chatRoom_1_map.put("name", "1");
-        Map<String, Object> chatRoom_2_map = new HashMap<>(); chatRoom_2_map.put("roomId", 2L); chatRoom_2_map.put("name", "2");
-        Map<String, Object> chatRoom_3_map = new HashMap<>(); chatRoom_3_map.put("roomId", 3L); chatRoom_3_map.put("name", "3");
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> chatRoom_1_map = new HashMap<>();
+        chatRoom_1_map.put("roomId", 1L);
+        chatRoom_1_map.put("name", "1");
+        Map<String, Object> chatRoom_2_map = new HashMap<>();
+        chatRoom_2_map.put("roomId", 2L);
+        chatRoom_2_map.put("name", "2");
+        Map<String, Object> chatRoom_3_map = new HashMap<>();
+        chatRoom_3_map.put("roomId", 3L);
+        chatRoom_3_map.put("name", "3");
         result.add(chatRoom_1_map);
         result.add(chatRoom_2_map);
         result.add(chatRoom_3_map);
@@ -88,6 +101,7 @@ public class GetRoomsCommandTest {
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
+        responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.ERROR);
 
         assertEquals(responseCurrent, response);

@@ -30,14 +30,14 @@ public class GetMessagesCommand implements CommandHandler {
     public ServerResponse execute(UserCommand command) {
         Map<String, Object> parameters = command.getParameters();
         if (checkParameters(parameters)) {
-            return responseGenerator.generateResponseError("Ошибка запроса");
+            return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
         Long roomId = (Long) parameters.get("roomId");
         Integer size = (Integer) parameters.get("size");
         Integer page = (Integer) parameters.get("page");
         List<Message> messageList = messageService.getMessagesByRoom(roomId, page, size);
         CommandStatus status = messageList.isEmpty() ? CommandStatus.ERROR :CommandStatus.OK;
-        return responseGenerator.generateResponseForMessages(status, messageList);
+        return responseGenerator.generateResponseForMessages(command.getCommand(), status, messageList);
     }
 
     public boolean checkParameters(Map<String, Object> parameters) {

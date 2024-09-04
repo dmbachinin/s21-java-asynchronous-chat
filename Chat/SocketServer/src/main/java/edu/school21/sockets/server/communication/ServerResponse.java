@@ -9,6 +9,7 @@ import java.util.Objects;
 public class ServerResponse {
     private CommandStatus status;
     private String message;
+    private String command;
     private Map<String, Object> data;
 
     public ServerResponse() {
@@ -17,10 +18,19 @@ public class ServerResponse {
         data = new HashMap<>();
     }
 
-    public ServerResponse(CommandStatus status, String message, Map<String, Object> data) {
+    public ServerResponse(String command, CommandStatus status, String message, Map<String, Object> data) {
+        this.command = command;
         this.status = status;
         this.message = message;
         this.data = data;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     public CommandStatus getStatus() {

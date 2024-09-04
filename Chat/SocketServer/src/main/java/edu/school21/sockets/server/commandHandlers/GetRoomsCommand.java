@@ -29,7 +29,7 @@ public class GetRoomsCommand implements CommandHandler {
     public ServerResponse execute(UserCommand command) {
         Map<String, Object> parameters = command.getParameters();
         if (checkParameters(parameters)) {
-            return responseGenerator.generateResponseError("Ошибка запроса");
+            return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
         Long id = (Long) parameters.get("userId");
         List<ChatRoom> chatRoomList = chatRoomService.findUserChatRooms(id);
@@ -37,7 +37,7 @@ public class GetRoomsCommand implements CommandHandler {
         if (chatRoomList.isEmpty()) {
             status = CommandStatus.ERROR;
         }
-        return responseGenerator.generateResponseForChatRooms(status, chatRoomList);
+        return responseGenerator.generateResponseForChatRooms(command.getCommand(), status, chatRoomList);
     }
 
     public boolean checkParameters(Map<String, Object> parameters) {
