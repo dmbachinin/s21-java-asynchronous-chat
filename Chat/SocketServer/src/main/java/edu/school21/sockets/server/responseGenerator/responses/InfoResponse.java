@@ -2,9 +2,9 @@ package edu.school21.sockets.server.responseGenerator.responses;
 
 import edu.school21.sockets.models.Message;
 
-public class MessageResponse {
+public class InfoResponse {
 
-    public static String generate(Message entity) {
-        return entity.getContent();
+    public static String generate(String message) {
+        return message;
     }
 }

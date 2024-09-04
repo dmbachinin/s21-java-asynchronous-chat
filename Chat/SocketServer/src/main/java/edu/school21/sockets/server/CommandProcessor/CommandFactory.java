@@ -26,6 +26,7 @@ public class CommandFactory {
         commandHandlers.put("CREATE_ROOM", new CreateRoomCommand(chatService, responseGenerator));
         commandHandlers.put("JOIN_THE_ROOM", new JoinTheRoomCommand(chatService, responseGenerator));
         commandHandlers.put("GET_ROOMS", new JoinTheRoomCommand(chatService, responseGenerator));
+        commandHandlers.put("SEND_MESSAGE", new SendMessageCommand(messageService, responseGenerator));
     }
 
     public CommandHandler getCommandHandler(String command) {

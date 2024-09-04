@@ -3,12 +3,10 @@ package edu.school21.sockets.server.responseGenerator;
 import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.models.Message;
 import edu.school21.sockets.models.User;
+import edu.school21.sockets.repositories.MessageRepository;
 import edu.school21.sockets.server.commandHandlers.CommandStatus;
 import edu.school21.sockets.server.communication.ServerResponse;
-import edu.school21.sockets.server.responseGenerator.responses.ChatRoomsResponse;
-import edu.school21.sockets.server.responseGenerator.responses.ErrorResponse;
-import edu.school21.sockets.server.responseGenerator.responses.MessageResponse;
-import edu.school21.sockets.server.responseGenerator.responses.UserInfoResponse;
+import edu.school21.sockets.server.responseGenerator.responses.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -57,8 +55,8 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     }
 
     @Override
-    public String generateResponse(CommandStatus status, Message message) {
-        return null;
+    public ServerResponse generateResponse(CommandStatus status, Message message) {
+        return  new ServerResponse(status, MessageResponse.generate(message), new HashMap<>());
     }
 
     @Override
@@ -75,7 +73,7 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     @Override
     public ServerResponse generateResponseMessage(String message) {
         return new ServerResponse(CommandStatus.OK,
-                MessageResponse.generate(message), new HashMap<>());
+                InfoResponse.generate(message), new HashMap<>());
     }
 
 
