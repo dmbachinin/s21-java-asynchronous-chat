@@ -44,14 +44,17 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     @Override
     public ServerResponse generateResponseForChatRooms(CommandStatus status, List<ChatRoom> chatRoomList) {
         Map<String, Object> data = new HashMap<>();
-        List<Long> chatRoomsId = new ArrayList<>();
+        List<Map<String, Object>> chatRooms = new ArrayList<>();
         if (status == CommandStatus.OK) {
             for (ChatRoom chatRoom : chatRoomList) {
-                chatRoomsId.add(chatRoom.getId());
+                Map<String, Object> chatRoomInfo = new HashMap<>();
+                chatRoomInfo.put("roomId", chatRoom.getId());
+                chatRoomInfo.put("name", chatRoom.getName());
+                chatRooms.add(chatRoomInfo);
             }
-            data.put("roomsId", chatRoomsId);
+            data.put("rooms", chatRooms);
         }
-        return new ServerResponse(status, ChatRoomsResponse.generate(chatRoomList), data);
+        return new ServerResponse(status, null, data);
     }
 
     @Override
@@ -60,8 +63,21 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
     }
 
     @Override
-    public String generateResponseForMessages(CommandStatus status, List<ChatRoom> messageList) {
-        return null;
+    public ServerResponse generateResponseForMessages(CommandStatus status, List<Message> messageList) {
+        Map<String, Object> data = new HashMap<>();
+        List<Map<String, Object>> messages = new ArrayList<>();
+        if (status == CommandStatus.OK) {
+            for (Message message : messageList) {
+                Map<String, Object> chatRoomInfo = new HashMap<>();
+                chatRoomInfo.put("roomId", message.getId());
+                chatRoomInfo.put("content", message.getContent());
+                chatRoomInfo.put("senderName", message.getUser().getName());
+                chatRoomInfo.put("createAt", message.getCreatedAt());
+                messages.add(chatRoomInfo);
+            }
+            data.put("messages", messages);
+        }
+        return new ServerResponse(status, null, data);
     }
 
     @Override

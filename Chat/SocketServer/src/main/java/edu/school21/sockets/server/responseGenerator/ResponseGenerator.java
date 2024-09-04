@@ -14,7 +14,7 @@ public interface ResponseGenerator {
     ServerResponse generateResponseForChatRooms(CommandStatus status, List<ChatRoom> chatRoomList);
 
     ServerResponse generateResponse(CommandStatus status, Message message);
-    String generateResponseForMessages(CommandStatus status, List<ChatRoom> messageList);
+    ServerResponse generateResponseForMessages(CommandStatus status, List<Message> messageList);
     ServerResponse generateResponseError(String message);
     ServerResponse generateResponseMessage(String message);
 }
