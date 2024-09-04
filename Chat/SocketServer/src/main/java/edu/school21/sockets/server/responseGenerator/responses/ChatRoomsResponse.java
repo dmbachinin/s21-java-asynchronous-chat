@@ -6,7 +6,11 @@ import java.util.List;
 
 public class ChatRoomsResponse {
 
-    public String generate(List<ChatRoom> entity) {
+    public static String generate(List<ChatRoom> entity) {
+        return null;
+    }
+
+    public static String generate(ChatRoom entity) {
         return null;
     }
 }

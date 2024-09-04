@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface ResponseGenerator {
     ServerResponse generateResponse(CommandStatus status, User user);
-    String generateResponse(CommandStatus status, ChatRoom chatRoom);
+    ServerResponse generateResponse(CommandStatus status, ChatRoom chatRoom);
     String generateResponseForChatRooms(CommandStatus status, List<ChatRoom> chatRoomList);
     String generateResponse(CommandStatus status, Message message);
     String generateResponseForMessages(CommandStatus status, List<ChatRoom> messageList);
     ServerResponse generateResponseError(String message);
+    ServerResponse generateResponseMessage(String message);
 }

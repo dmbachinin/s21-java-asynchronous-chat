@@ -1,7 +1,6 @@
 package edu.school21.sockets.server.CommandProcessor;
 
-import edu.school21.sockets.server.commandHandlers.CommandHandler;
-import edu.school21.sockets.server.commandHandlers.LogInCommand;
+import edu.school21.sockets.server.commandHandlers.*;
 import edu.school21.sockets.server.responseGenerator.MessageComposer;
 import edu.school21.sockets.server.responseGenerator.ResponseGenerator;
 import edu.school21.sockets.services.ChatRoomService;
@@ -23,6 +22,9 @@ public class CommandFactory {
                           MessageService messageService,
                           ResponseGenerator responseGenerator) {
         commandHandlers.put("LOG_IN", new LogInCommand(userService, responseGenerator));
+        commandHandlers.put("SING_UP", new SingUpCommand(userService, responseGenerator));
+        commandHandlers.put("CREATE_ROOM", new CreateRoomCommand(chatService, responseGenerator));
+        commandHandlers.put("JOIN_THE_ROOM", new JoinTheRoomCommand(chatService, responseGenerator));
     }
 
     public CommandHandler getCommandHandler(String command) {
