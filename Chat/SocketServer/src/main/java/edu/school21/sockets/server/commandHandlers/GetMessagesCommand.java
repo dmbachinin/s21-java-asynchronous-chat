@@ -32,7 +32,7 @@ public class GetMessagesCommand implements CommandHandler {
         if (checkParameters(parameters)) {
             return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
-        Long roomId = (Long) parameters.get("roomId");
+        Long roomId = ((Integer) parameters.get("roomId")).longValue();
         Integer size = (Integer) parameters.get("size");
         Integer page = (Integer) parameters.get("page");
         List<Message> messageList = messageService.getMessagesByRoom(roomId, page, size);
@@ -46,7 +46,7 @@ public class GetMessagesCommand implements CommandHandler {
                 !parameters.containsKey("size") ||
                 !parameters.containsKey("page");
         return dontHaveSomeParameter ||
-                !(parameters.get("roomId") instanceof Long) ||
+                !(parameters.get("roomId") instanceof Integer) ||
                 !(parameters.get("size") instanceof Integer) ||
                 !(parameters.get("page") instanceof Integer);
     }

@@ -51,7 +51,7 @@ public class CreateRoomCommandTest {
         UserCommand command = new UserCommand();
         command.setCommand("CREATE_ROOM");
         command.addParameter("name", "name");
-        command.addParameter("userId", 2L);
+        command.addParameter("userId", 2);
         command.addParameter("description", "description");
         command.addParameter("other", "other");
 
@@ -60,7 +60,7 @@ public class CreateRoomCommandTest {
         ServerResponse responseCurrent = new ServerResponse();
         responseCurrent.setStatus(CommandStatus.OK);
         responseCurrent.setCommand(command.getCommand());
-        responseCurrent.addData("chatId", 4L);
+        responseCurrent.addData("roomId", 4L);
 
         assertEquals(responseCurrent, response);
 
@@ -76,7 +76,7 @@ public class CreateRoomCommandTest {
         UserCommand command = new UserCommand();
         command.setCommand("CREATE_ROOM");
         command.addParameter("name", "name");
-        command.addParameter("userId", 4L);
+        command.addParameter("userId", 4);
         command.addParameter("description", "description");
         command.addParameter("other", "other");
 

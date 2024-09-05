@@ -25,10 +25,12 @@ public class CommandFactory {
         commandHandlers.put("SING_UP", new SingUpCommand(userService, responseGenerator));
         commandHandlers.put("CREATE_ROOM", new CreateRoomCommand(chatService, responseGenerator));
         commandHandlers.put("JOIN_THE_ROOM", new JoinTheRoomCommand(chatService, responseGenerator));
-        commandHandlers.put("GET_ROOMS", new JoinTheRoomCommand(chatService, responseGenerator));
+        commandHandlers.put("GET_USER_ROOMS", new GetUserRoomsCommand(chatService, responseGenerator));
+        commandHandlers.put("GET_ROOMS", new GetRoomsCommand(chatService, responseGenerator));
         commandHandlers.put("SEND_MESSAGE", new SendMessageCommand(messageService, responseGenerator));
         commandHandlers.put("GET_MESSAGE", new GetMessagesCommand(messageService, responseGenerator));
         commandHandlers.put("GET_LAST_VISIT_ROOM", new GetMessagesCommand(messageService, responseGenerator));
+        commandHandlers.put("GET_ROOM_BY_ID", new GetRoomByIdCommand(chatService, responseGenerator));
     }
 
     public CommandHandler getCommandHandler(String command) {

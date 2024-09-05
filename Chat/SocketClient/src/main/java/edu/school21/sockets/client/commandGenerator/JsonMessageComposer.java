@@ -3,6 +3,7 @@ package edu.school21.sockets.server.responseGenerator;
 import edu.school21.sockets.server.communication.ServerResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component("messageComposer")

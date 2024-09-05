@@ -25,7 +25,7 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         } else {
             message = ErrorResponse.generate("Пользователь не найден");
         }
-        return  new ServerResponse(command, status, message, data);
+        return new ServerResponse(command, status, message, data);
     }
 
     @Override
@@ -34,9 +34,9 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         Map<String, Object> data = new HashMap<>();
         if (Objects.requireNonNull(status) == CommandStatus.OK) {
             message = ChatRoomsResponse.generate(chatRoom);
-            data.put("chatId", chatRoom.getId());
+            data.put("roomId", chatRoom.getId());
         } else {
-            message = ErrorResponse.generate("Пользователь не найден");
+            message = ErrorResponse.generate("Комната не найдена");
         }
         return new ServerResponse(command, status, message, data);
     }
@@ -59,7 +59,7 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
 
     @Override
     public ServerResponse generateResponse(String command, CommandStatus status, Message message) {
-        return  new ServerResponse(command, status, MessageResponse.generate(message), new HashMap<>());
+        return new ServerResponse(command, status, MessageResponse.generate(message), new HashMap<>());
     }
 
     @Override
@@ -91,55 +91,4 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         return new ServerResponse(command, CommandStatus.OK,
                 InfoResponse.generate(message), new HashMap<>());
     }
-
-
-//
-//    @Override
-//    public String generateStartPage() {
-//        return "Привет от сервера!\n" +
-//                "1. Войти\n" +
-//                "2. Зарегистрироваться\n" +
-//                "3. Выйти\n";
-//    }
-//
-//    @Override
-//    public String generateUserInfo(User user) {
-//        return "Привет " + user.getName() + "\n";
-//    }
-//
-//    @Override
-//    public String generateChatRooms(List<ChatRoom> chatRoomList) {
-//        StringJoiner stringJoiner =  new StringJoiner("\n","Список комнат\n", separator);
-//        for (ChatRoom chatRoom : chatRoomList) {
-//            stringJoiner.add(generateChatRoomInfoShort(chatRoom));
-//        }
-//        return  stringJoiner.toString();
-//    }
-//
-//    @Override
-//    public String generateChatRoomInfoShort(ChatRoom chatRoom) {
-//        return chatRoom.getName() + "\n";
-//    }
-//
-//    @Override
-//    public String generateChatRoomInfoLong(ChatRoom chatRoom) {
-//        return "Название: " + chatRoom.getName() + "\n" +
-//                "Описание: " + chatRoom.getDescription() + "\n" +
-//                "Дата создания: " + chatRoom.getCreatedAt().toString() + "\n" +
-//                separator;
-//    }
-//
-//    @Override
-//    public String generateMessages(List<Message> messageList) {
-//        StringJoiner stringJoiner =  new StringJoiner("\n","", "");
-//        for (Message message : messageList) {
-//            stringJoiner.add(generateMessage(message));
-//        }
-//        return  stringJoiner.toString();
-//    }
-//
-//    @Override
-//    public String generateMessage(Message message) {
-//        return message.getContent();
-//    }
 }

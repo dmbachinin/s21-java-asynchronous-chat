@@ -4,6 +4,6 @@ import edu.school21.sockets.models.User;
 
 public class UserInfoResponse {
     public static String generateWelcomeMessage(User user) {
-        return "Привет " + user.getName() + "\n";
+        return "Привет, " + user.getName();
     }
 }

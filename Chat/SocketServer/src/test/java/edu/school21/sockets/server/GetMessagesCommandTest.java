@@ -66,7 +66,7 @@ public class GetMessagesCommandTest {
 
         UserCommand command = new UserCommand();
         command.setCommand("GET_MESSAGE");
-        command.addParameter("roomId", 1L);
+        command.addParameter("roomId", 1);
         command.addParameter("page", 1);
         command.addParameter("size", 2);
         command.addParameter("other", "other");
@@ -106,7 +106,7 @@ public class GetMessagesCommandTest {
 
         UserCommand command = new UserCommand();
         command.setCommand("GET_MESSAGE");
-        command.addParameter("roomId", 404L);
+        command.addParameter("roomId", 404);
         command.addParameter("page", 1);
         command.addParameter("size", 2);
         command.addParameter("other", "other");

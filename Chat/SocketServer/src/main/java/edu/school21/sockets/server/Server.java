@@ -40,7 +40,7 @@ public class Server implements Runnable {
         try {
             while (running) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("ECЬ Клиент");
+                System.out.println("Подключился клиент");
                 executorService.execute(()->{handleClient(clientSocket);});
             }
         } catch (Exception e) {
@@ -58,10 +58,8 @@ public class Server implements Runnable {
              PrintWriter out =
                      new PrintWriter(clientSocket.getOutputStream(),true)) {
             String inputLine;
+            out.println("Привет от сервера!");
             while ((inputLine = in.readLine()) != null) {
-                if ("exit".equalsIgnoreCase(inputLine)) {
-                    break;
-                }
                 ServerResponse response = processor.handeCommand(inputLine);
                 String responseJson = messageComposer.generate(response);
                 out.println(responseJson);

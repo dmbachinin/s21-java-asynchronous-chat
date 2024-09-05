@@ -31,4 +31,12 @@ public class UserCommand {
     public void addParameter(String key, Object val) {
         parameters.put(key, val);
     }
+
+    @Override
+    public String toString() {
+        return "UserCommand{" +
+                "command='" + command + '\'' +
+                ", parameters=" + parameters +
+                '}';
+    }
 }

@@ -33,8 +33,8 @@ public class SendMessageCommand implements CommandHandler {
         if (checkParameters(parameters)) {
             return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
-        Long roomId = (Long) parameters.get("roomId");
-        Long senderId = (Long) parameters.get("senderId");
+        Long roomId = ((Integer) parameters.get("roomId")).longValue();
+        Long senderId = ((Integer) parameters.get("senderId")).longValue();
         String content = (String) parameters.get("content");
         Optional<Message> optional = messageService.sendMessage(roomId, senderId, content);
         CommandStatus commandStatus = optional.isPresent() ? CommandStatus.OK : CommandStatus.ERROR;
@@ -47,7 +47,7 @@ public class SendMessageCommand implements CommandHandler {
                 !parameters.containsKey("senderId") ||
                 !parameters.containsKey("content");
         return dontHaveSomeParameter ||
-                !(parameters.get("roomId") instanceof Long) ||
-                !(parameters.get("senderId") instanceof Long);
+                !(parameters.get("roomId") instanceof Integer) ||
+                !(parameters.get("senderId") instanceof Integer);
     }
 }

@@ -46,8 +46,8 @@ public class JoinTheRoomCommandTest {
 
         UserCommand command = new UserCommand();
         command.setCommand("JOIN_THE_ROOM");
-        command.addParameter("roomId", 2L);
-        command.addParameter("userId", 2L);
+        command.addParameter("roomId", 2);
+        command.addParameter("userId", 2);
         command.addParameter("other", "other");
 
         ServerResponse response = testCommand.execute(command);
@@ -69,8 +69,8 @@ public class JoinTheRoomCommandTest {
 
         UserCommand command = new UserCommand();
         command.setCommand("JOIN_THE_ROOM");
-        command.addParameter("roomId", 4L);
-        command.addParameter("userId", 2L);
+        command.addParameter("roomId", 4);
+        command.addParameter("userId", 2);
         command.addParameter("other", "other");
 
         ServerResponse response = testCommand.execute(command);

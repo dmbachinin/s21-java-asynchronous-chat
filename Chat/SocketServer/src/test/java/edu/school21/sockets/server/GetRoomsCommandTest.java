@@ -2,7 +2,7 @@ package edu.school21.sockets.server;
 
 import edu.school21.sockets.models.ChatRoom;
 import edu.school21.sockets.server.commandHandlers.CommandStatus;
-import edu.school21.sockets.server.commandHandlers.GetRoomsCommand;
+import edu.school21.sockets.server.commandHandlers.GetUserRoomsCommand;
 import edu.school21.sockets.server.communication.ServerResponse;
 import edu.school21.sockets.server.communication.UserCommand;
 import edu.school21.sockets.server.responseGenerator.ResponseGenerator;
@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -29,13 +28,13 @@ public class GetRoomsCommandTest {
     private ResponseGenerator responseGenerator;
 
     @InjectMocks
-    private GetRoomsCommand testCommand;
+    private GetUserRoomsCommand testCommand;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         responseGenerator = new ResponseGeneratorImpl();
-        testCommand = new GetRoomsCommand(mockService, responseGenerator);
+        testCommand = new GetUserRoomsCommand(mockService, responseGenerator);
     }
 
     @Test
@@ -59,7 +58,7 @@ public class GetRoomsCommandTest {
 
         UserCommand command = new UserCommand();
         command.setCommand("GET_ROOMS");
-        command.addParameter("userId", 2L);
+        command.addParameter("userId", 2);
         command.addParameter("other", "other");
 
         ServerResponse response = testCommand.execute(command);
@@ -95,7 +94,7 @@ public class GetRoomsCommandTest {
 
         UserCommand command = new UserCommand();
         command.setCommand("GET_ROOMS");
-        command.addParameter("userId", 4L);
+        command.addParameter("userId", 4);
         command.addParameter("other", "other");
 
         ServerResponse response = testCommand.execute(command);

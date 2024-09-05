@@ -16,6 +16,7 @@ public interface ChatRoomService {
     boolean addUserToRoom(Long roomId, Long userId);
     boolean removeUserFromRoom(Long roomId, Long userId);
     List<ChatRoom> findUserChatRooms(Long userId);
+    List<ChatRoom> getAllChatRooms();
 
     List<User> getAllConnectedUser(Long roomId);
 

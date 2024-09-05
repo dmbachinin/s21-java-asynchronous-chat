@@ -30,7 +30,7 @@ public class GetLastVisitRoomCommand implements CommandHandler {
         if (checkParameters(parameters)) {
             return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
-        Long id = (Long) parameters.get("userId");
+        Long id = ((Integer)parameters.get("userId")).longValue();
         Optional<ChatRoom> optional = chatRoomService.getLastVisitRoom(id);
         CommandStatus commandStatus = optional.isPresent() ? CommandStatus.OK : CommandStatus.NOT_FOUND;
         return responseGenerator.generateResponse(command.getCommand(),commandStatus, optional.orElseGet(ChatRoom::new));
@@ -39,6 +39,6 @@ public class GetLastVisitRoomCommand implements CommandHandler {
     public boolean checkParameters(Map<String, Object> parameters) {
         boolean dontHaveSomeParameter =
                 !parameters.containsKey("userId");
-        return dontHaveSomeParameter || !(parameters.get("userId") instanceof Long);
+        return dontHaveSomeParameter || !(parameters.get("userId") instanceof Integer);
     }
 }

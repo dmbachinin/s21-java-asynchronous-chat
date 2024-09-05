@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Component
 public class GetRoomsCommand implements CommandHandler {
@@ -27,21 +26,10 @@ public class GetRoomsCommand implements CommandHandler {
 
     @Override
     public ServerResponse execute(UserCommand command) {
-        Map<String, Object> parameters = command.getParameters();
-        if (checkParameters(parameters)) {
-            return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
-        }
-        Long id = (Long) parameters.get("userId");
-        List<ChatRoom> chatRoomList = chatRoomService.findUserChatRooms(id);
-        CommandStatus status = CommandStatus.OK;
-        if (chatRoomList.isEmpty()) {
-            status = CommandStatus.ERROR;
-        }
+
+        List<ChatRoom> chatRoomList = chatRoomService.getAllChatRooms();
+        CommandStatus status = chatRoomList.isEmpty() ? CommandStatus.ERROR : CommandStatus.OK;
         return responseGenerator.generateResponseForChatRooms(command.getCommand(), status, chatRoomList);
     }
 
-    public boolean checkParameters(Map<String, Object> parameters) {
-        boolean dontHaveSomeParameter = !parameters.containsKey("userId");
-        return dontHaveSomeParameter || !(parameters.get("userId") instanceof Long);
-    }
 }

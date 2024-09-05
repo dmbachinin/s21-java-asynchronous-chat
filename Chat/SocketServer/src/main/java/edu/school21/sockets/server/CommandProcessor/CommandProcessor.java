@@ -39,6 +39,7 @@ public class CommandProcessor {
         try {
           UserCommand userCommand = objectMapper.readValue(jsonCommand, UserCommand.class);
           String command = userCommand.getCommand();
+          System.out.println(userCommand);
           CommandHandler commandHandler = commandFactory.getCommandHandler(command);
           return commandHandler.execute(userCommand);
 

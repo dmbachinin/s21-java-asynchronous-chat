@@ -32,7 +32,7 @@ public class CreateRoomCommand implements CommandHandler {
         if (checkParameters(parameters)) {
             return responseGenerator.generateResponseError(command.getCommand(),"Ошибка запроса");
         }
-        Long id = (Long) parameters.get("userId");
+        Long id = ((Integer)parameters.get("userId")).longValue();
         String name = (String) parameters.get("name");
         String description = (String) parameters.get("description");
         Optional<ChatRoom> optional = chatRoomService.createChatRoom(id, name, description);
@@ -45,6 +45,6 @@ public class CreateRoomCommand implements CommandHandler {
                 !parameters.containsKey("userId") ||
                 !parameters.containsKey("name") ||
                 !parameters.containsKey("description");
-        return dontHaveSomeParameter || !(parameters.get("userId") instanceof Long);
+        return dontHaveSomeParameter || !(parameters.get("userId") instanceof Integer);
     }
 }

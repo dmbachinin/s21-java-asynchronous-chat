@@ -48,14 +48,14 @@ public class GetLastVisitRoomCommandTest {
 
         UserCommand command = new UserCommand();
         command.setCommand("GET_LAST_VISIT_ROOM");
-        command.addParameter("userId", 2L);
+        command.addParameter("userId", 2);
 
         ServerResponse response = testCommand.execute(command);
 
         ServerResponse responseCurrent = new ServerResponse();
         responseCurrent.setStatus(CommandStatus.OK);
         responseCurrent.setCommand(command.getCommand());
-        responseCurrent.addData("chatId", 4L);
+        responseCurrent.addData("roomId", 4L);
 
         assertEquals(responseCurrent, response);
 

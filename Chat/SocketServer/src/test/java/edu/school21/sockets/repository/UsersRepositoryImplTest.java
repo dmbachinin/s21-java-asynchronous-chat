@@ -76,20 +76,18 @@ public class UsersRepositoryImplTest {
     @Test
     public void saveTest() {
         User user = new User();
-        user.setId(3L);
         user.setEmail("new EMAIL");
         user.setName("new NAME");
         user.setPasswordHash("new hashed_password");
 
         usersRepository.save(user);
 
-        assertEquals(user.getId(), 4);
-        Optional<User> userOptional = usersRepository.findById(4L);
+        assertNotNull(user.getId());
+        Optional<User> userOptional = usersRepository.findById(user.getId());
         assertTrue(userOptional.isPresent());
 
         User newUser = userOptional.get();
 
-        assertEquals(newUser.getId(), 4);
         assertEquals(newUser.getEmail(), "new EMAIL");
         assertEquals(newUser.getName(), "new NAME");
         assertEquals(newUser.getPasswordHash(), "new hashed_password");

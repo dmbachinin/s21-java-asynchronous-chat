@@ -88,6 +88,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
+    public List<ChatRoom> getAllChatRooms() {
+        return chatRoomChatRoomsRepository.findAll();
+    }
+
+    @Override
     public List<User> getAllConnectedUser(Long roomId) {
         return chatRoomChatRoomsRepository.getAllConnectedUser(roomId);
     }
