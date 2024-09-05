@@ -1,20 +1,18 @@
-package edu.school21.sockets.server.responseGenerator;
+package edu.school21.sockets.client.commandGenerator;
 
-import edu.school21.sockets.server.communication.ServerResponse;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
 @Component("messageComposer")
 public class JsonMessageComposer implements MessageComposer {
 
     @Override
-    public String generate(ServerResponse response) {
+    public String compose(UserCommand response) {
         String json = null;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             json = objectMapper.writeValueAsString(response);
+            System.out.println(json);
         } catch (Exception ignore) {}
         return json;
     }

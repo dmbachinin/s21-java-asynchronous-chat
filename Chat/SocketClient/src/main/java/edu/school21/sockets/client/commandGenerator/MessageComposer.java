@@ -1,11 +1,7 @@
-package edu.school21.sockets.server.responseGenerator;
+package edu.school21.sockets.client.commandGenerator;
 
-import edu.school21.sockets.server.commandHandlers.CommandStatus;
-import edu.school21.sockets.server.communication.ServerResponse;
-
-import java.util.Map;
 
 public interface MessageComposer {
-    String generate(ServerResponse response);
+    String compose(UserCommand response);
 }
 
