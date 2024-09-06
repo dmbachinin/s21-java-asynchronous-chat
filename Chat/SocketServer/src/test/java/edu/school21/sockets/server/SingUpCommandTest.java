@@ -60,6 +60,7 @@ public class SingUpCommandTest {
         responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
         responseCurrent.addData("userId", 4L);
+        responseCurrent.addData("name", null);
 
         assertEquals(responseCurrent, response);
 
