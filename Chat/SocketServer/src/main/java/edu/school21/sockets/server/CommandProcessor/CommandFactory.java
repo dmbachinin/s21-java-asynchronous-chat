@@ -29,7 +29,7 @@ public class CommandFactory {
         commandHandlers.put("GET_ROOMS", new GetRoomsCommand(chatService, responseGenerator));
         commandHandlers.put("SEND_MESSAGE", new SendMessageCommand(messageService, responseGenerator));
         commandHandlers.put("GET_MESSAGE", new GetMessagesCommand(messageService, responseGenerator));
-        commandHandlers.put("GET_LAST_VISIT_ROOM", new GetMessagesCommand(messageService, responseGenerator));
+        commandHandlers.put("GET_LAST_VISIT_ROOM", new GetLastVisitRoomCommand(chatService, responseGenerator));
         commandHandlers.put("GET_ROOM_BY_ID", new GetRoomByIdCommand(chatService, responseGenerator));
     }
 

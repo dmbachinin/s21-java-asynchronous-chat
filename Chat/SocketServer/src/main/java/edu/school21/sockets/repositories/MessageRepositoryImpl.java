@@ -125,7 +125,7 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
                 + " FROM messages m " +
                 "JOIN users u ON m.user_id = u.id " +
                 "JOIN chat_rooms c ON m.room_id = c.id " +
-                "WHERE m.room_id = :room_id ORDER BY m.created_at DESC LIMIT :size OFFSET :offset";
+                "WHERE m.room_id = :room_id ORDER BY m.created_at LIMIT :size OFFSET :offset";
 
         int offset = (page - 1) * size;
 
@@ -133,7 +133,6 @@ public class MessageRepositoryImpl implements MessageRepository<Message>{
         params.put("room_id", roomId);
         params.put("size", size);
         params.put("offset", offset);
-
         return namedParameterJdbcTemplate.query(sql, params, new MessageRowMapper());
     }
 }

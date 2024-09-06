@@ -22,6 +22,7 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         if (Objects.requireNonNull(status) == CommandStatus.OK) {
             message = UserInfoResponse.generateWelcomeMessage(user);
             data.put("userId", user.getId());
+            data.put("name", user.getName());
         } else {
             message = ErrorResponse.generate("Пользователь не найден");
         }
@@ -68,12 +69,13 @@ public class ResponseGeneratorImpl implements ResponseGenerator {
         List<Map<String, Object>> messages = new ArrayList<>();
         if (status == CommandStatus.OK) {
             for (Message message : messageList) {
-                Map<String, Object> chatRoomInfo = new HashMap<>();
-                chatRoomInfo.put("roomId", message.getId());
-                chatRoomInfo.put("content", message.getContent());
-                chatRoomInfo.put("senderName", message.getUser().getName());
-                chatRoomInfo.put("createAt", message.getCreatedAt());
-                messages.add(chatRoomInfo);
+                Map<String, Object> messageInfo = new HashMap<>();
+                messageInfo.put("id", message.getId());
+                messageInfo.put("roomId", message.getRoom().getId());
+                messageInfo.put("content", message.getContent());
+                messageInfo.put("senderName", message.getUser().getName());
+                messageInfo.put("createAt", message.getCreatedAt());
+                messages.add(messageInfo);
             }
             data.put("messages", messages);
         }

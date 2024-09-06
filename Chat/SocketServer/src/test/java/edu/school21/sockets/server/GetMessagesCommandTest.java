@@ -53,7 +53,7 @@ public class GetMessagesCommandTest {
         Message message_2 = new Message();
         message_2.setId(2L);
         message_2.setUser(new User(2L, "User2", null, null));
-        message_2.setRoom(new ChatRoom(1L, null, null, null));
+        message_2.setRoom(new ChatRoom(2L, null, null, null));
         message_2.setContent("Hello!");
 
         List<Message> messageList = new ArrayList<>();
@@ -79,11 +79,13 @@ public class GetMessagesCommandTest {
 
         List<Map<String, Object>> result = new ArrayList<>();
         Map<String, Object> message_1_map = new HashMap<>();
+        message_1_map.put("id", 1L);
         message_1_map.put("roomId", 1L);
         message_1_map.put("senderName", "User1");
         message_1_map.put("content", "HI!!!");
         message_1_map.put("createAt", null);
         Map<String, Object> message_2_map = new HashMap<>();
+        message_2_map.put("id", 2L);
         message_2_map.put("roomId", 2L);
         message_2_map.put("senderName", "User2");
         message_2_map.put("content", "Hello!");

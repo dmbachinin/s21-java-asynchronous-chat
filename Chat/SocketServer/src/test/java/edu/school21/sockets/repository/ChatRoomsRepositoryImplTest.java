@@ -103,7 +103,6 @@ public class ChatRoomsRepositoryImplTest {
     @Test
     public void addAndRemoveUserToRoomTestError() {
         assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.addUserToRoom(3L,404L);});
-        assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.addUserToRoom(3L,3L);});
         assertThrows(DataIntegrityViolationException.class, () -> {chatRoomsRepository.removeUserFromRoom(3L,404L);});
     }
 

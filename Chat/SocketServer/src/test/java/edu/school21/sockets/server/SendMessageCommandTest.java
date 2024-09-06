@@ -50,7 +50,7 @@ public class SendMessageCommandTest {
         UserCommand command = new UserCommand();
         command.setCommand("SEND_MESSAGE");
         command.addParameter("roomId", 2);
-        command.addParameter("senderId", 2);
+        command.addParameter("userId", 2);
         command.addParameter("content", "message");
         command.addParameter("other", "other");
 
@@ -74,7 +74,7 @@ public class SendMessageCommandTest {
         UserCommand command = new UserCommand();
         command.setCommand("SEND_MESSAGE");
         command.addParameter("roomId", 404);
-        command.addParameter("senderId", 2);
+        command.addParameter("userId", 2);
         command.addParameter("content", "message");
         command.addParameter("other", "other");
 

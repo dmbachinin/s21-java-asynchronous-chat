@@ -62,10 +62,17 @@ public class ChatRoomsRepositoryImpl implements ChatRoomsRepository<ChatRoom> {
 
     @Override
     public void addUserToRoom(Long roomId, Long userId) {
-        String sql = "INSERT INTO user_chat_rooms(user_id, room_id) VALUES (:userId, :roomId)";
+        String sql = "SELECT COUNT(*) FROM user_chat_rooms WHERE user_id = :userId AND room_id = :roomId";
         Map<String, Object> params = new HashMap<>();
         params.put("roomId", roomId);
         params.put("userId", userId);
+
+        Integer count = namedParameterJdbcTemplate.queryForObject(sql, params, Integer.class);
+        if (count != null && count > 0) {
+            removeUserFromRoom(roomId, userId);
+        }
+
+        sql = "INSERT INTO user_chat_rooms(user_id, room_id) VALUES (:userId, :roomId)";
         namedParameterJdbcTemplate.update(sql, params);
     }
 

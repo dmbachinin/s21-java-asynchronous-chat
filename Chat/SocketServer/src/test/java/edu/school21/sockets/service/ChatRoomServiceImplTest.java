@@ -78,7 +78,6 @@ public class ChatRoomServiceImplTest {
     public void addUserToRoomTestError() {
         assertFalse(chatRoomService.addUserToRoom(404L,2L));
         assertFalse(chatRoomService.addUserToRoom(3L,404L));
-        assertFalse(chatRoomService.addUserToRoom(3L,3L));
     }
 
     @Test

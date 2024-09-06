@@ -62,6 +62,7 @@ public class Server implements Runnable {
             while ((inputLine = in.readLine()) != null) {
                 ServerResponse response = processor.handeCommand(inputLine);
                 String responseJson = messageComposer.generate(response);
+                System.out.println(responseJson);
                 out.println(responseJson);
             }
         } catch (IOException e) {
