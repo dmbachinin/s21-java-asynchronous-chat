@@ -58,6 +58,7 @@ public class LogInCommandTest {
         responseCurrent.setCommand(command.getCommand());
         responseCurrent.setStatus(CommandStatus.OK);
         responseCurrent.addData("userId", 2L);
+        responseCurrent.addData("name", null);
 
         assertEquals(responseCurrent, response);
 
