@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 @Component("printer")
 public class PrinterImpl implements Printer {
     private Renderer renderer;
-
+    private String separator = "_________________________\n";
     @Autowired
     public PrinterImpl(Renderer renderer) {
         this.renderer = renderer;
@@ -18,20 +18,26 @@ public class PrinterImpl implements Printer {
     
     @Override
     public void printStartPage() {
+        clear();
         renderer.render(
+                separator +
                 "1. Войти\n" +
                 "2. Зарегистрироваться\n" +
-                "3. Выйти\n"
+                "3. Выйти\n" +
+                separator
         );
     }
 
     @Override
     public void printChoseRoomPage() {
+        clear();
         renderer.render(
+                separator +
                 "1. Создать комнату\n" +
                 "2. Мои комнаты\n" +
                 "3. Присоединиться к комнате\n" +
-                "4. Выйти\n"
+                "4. Выйти\n"+
+                separator
         );
     }
 
@@ -53,11 +59,19 @@ public class PrinterImpl implements Printer {
 
     @Override
     public void printMessages(List<Map<String, Object>> messages) {
-        StringJoiner stringJoiner =  new StringJoiner("\n");
-        for (Map<String, Object> message : messages) {
-            stringJoiner.add(String.format("%s: %s", message.get("senderName"), message.get("content")));
+        if (!messages.isEmpty()) {
+            StringJoiner stringJoiner =  new StringJoiner("\n");
+            for (Map<String, Object> message : messages) {
+                stringJoiner.add(String.format("%s: %s", message.get("senderName"), message.get("content")));
+            }
+            renderer.render(stringJoiner + "\n");
         }
-        renderer.render(stringJoiner + "\n");
+    }
+
+    @Override
+    public void clear() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     @Override

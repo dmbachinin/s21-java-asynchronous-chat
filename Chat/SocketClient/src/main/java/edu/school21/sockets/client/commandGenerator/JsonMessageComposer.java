@@ -12,7 +12,7 @@ public class JsonMessageComposer implements MessageComposer {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             json = objectMapper.writeValueAsString(response);
-            System.out.println(json);
+//            System.out.println(json);
         } catch (Exception ignore) {}
         return json;
     }

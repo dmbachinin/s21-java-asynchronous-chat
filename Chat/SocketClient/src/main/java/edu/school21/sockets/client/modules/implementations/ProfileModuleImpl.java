@@ -98,6 +98,7 @@ public class ProfileModuleImpl implements ProfileModule {
             out.println(json);
             request = requestHandles.processing(in.readLine());
             if (request.getStatus().equalsIgnoreCase("OK")) {
+                printer.printMessage("Вы вошли в комнату " + data.get("name") + "\n");
                 roomId = ((Integer)data.get("roomId")).longValue();
             }
         } catch (Exception ignore) {}
@@ -116,7 +117,7 @@ public class ProfileModuleImpl implements ProfileModule {
             out.println(json);
             Request request = requestHandles.processing(in.readLine());
             List<Map<String, Object>> rooms = (List<Map<String, Object>>) request.getData().get("rooms");
-            if (rooms.isEmpty()) {
+            if (rooms == null || rooms.isEmpty()) {
                 printer.printMessage("Ваш список комнат пуст. \n");
                 return null;
             }
@@ -135,11 +136,35 @@ public class ProfileModuleImpl implements ProfileModule {
             if (choseNumber == rooms.size()) {
                 return null;
             }
-            roomId = ((Integer)rooms.get(choseNumber).get("roomId")).longValue();
+            data = rooms.get(choseNumber);
+            data.put("userId", userId);
+            json = messageComposer.compose(
+                    CommandGenerator.generate(AvailableCommand.JOIN_THE_ROOM, data)
+            );
+            out.println(json);
+            request = requestHandles.processing(in.readLine());
+            if (request.getStatus().equalsIgnoreCase("OK")) {
+                printer.printMessage("Вы вошли в комнату " + data.get("name") + "\n");
+                roomId = ((Integer)data.get("roomId")).longValue();
+            }
         } catch (Exception ignore) {}
         return roomId;
     }
-
+    @Override
+    public Long getLastVisitRoom(Long userId, BufferedReader in, PrintWriter out) {
+        Long roomId = null;
+        try {
+            Map<String, Object> data =  new HashMap<>();
+            data.put("userId", userId);
+            String json = messageComposer.compose(
+                    CommandGenerator.generate(AvailableCommand.GET_LAST_VISIT_ROOM, data)
+            );
+            out.println(json);
+            Request request = requestHandles.processing(in.readLine());
+            roomId = ((Integer)request.getData().get("roomId")).longValue();
+        } catch (Exception ignore) {}
+        return roomId;
+    }
     @Override
     public Long choosingRoom(Long userId, BufferedReader in, PrintWriter out) {
         Long roomId = null;
@@ -155,8 +180,8 @@ public class ProfileModuleImpl implements ProfileModule {
             } else if (line.equalsIgnoreCase("exit") || line.equals("4")){
                 break;
             }
-            scanner.nextLine();
         }
+
         return roomId;
     }
 }

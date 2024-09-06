@@ -13,7 +13,7 @@ public class JsonRequestHandles implements RequestHandles {
         Request request = null;
         try {
             request = objectMapper.readValue(json, Request.class);
-            System.out.println(request);
+//            System.out.println(request);
         } catch (Exception ignore) {}
         return request;
     }

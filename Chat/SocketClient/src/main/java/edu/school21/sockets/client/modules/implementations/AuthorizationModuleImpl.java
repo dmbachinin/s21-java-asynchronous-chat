@@ -49,6 +49,7 @@ public class AuthorizationModuleImpl implements AuthorizationModule {
             out.println(json);
             Request request = requestHandles.processing(in.readLine());
             userId = request.getValue("userId", Integer.class).longValue();
+            printer.printMessage("Приветствую, " + request.getValue("name", String.class) + "\n");
         } catch (Exception ignore) {}
         return userId;
     }
@@ -68,6 +69,7 @@ public class AuthorizationModuleImpl implements AuthorizationModule {
             out.println(json);
             Request request = requestHandles.processing(in.readLine());
             userId = request.getValue("userId", Integer.class).longValue();
+            printer.printMessage("Приветствую, " + request.getValue("name", String.class) + "\n");
         } catch (Exception ignore) {}
         return userId;
     }

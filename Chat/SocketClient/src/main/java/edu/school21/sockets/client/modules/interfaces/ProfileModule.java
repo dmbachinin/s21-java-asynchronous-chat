@@ -4,5 +4,6 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 
 public interface ProfileModule {
+    Long getLastVisitRoom(Long userId, BufferedReader in, PrintWriter out);
     public Long choosingRoom(Long userId, BufferedReader in, PrintWriter out);
 }

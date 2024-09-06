@@ -13,5 +13,6 @@ public interface Printer {
 
     void printMessages(List<Map<String, Object>> messages);
 
+    void clear();
     void printMessage(String message);
 }
